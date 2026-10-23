@@ -43,8 +43,8 @@ const HEADERS = [
 // 【LINE Messaging API 推播設定】
 // 請填入您在 LINE Developers 申請的 Channel Access Token 與您的 User ID (或群組 Group ID)
 // ==============================================================
-const LINE_CHANNEL_ACCESS_TOKEN = "YOUR_LINE_CHANNEL_ACCESS_TOKEN_HERE";
-const LINE_USER_ID = "YOUR_LINE_USER_ID_HERE"; // 您的 LINE User ID 或 群組 ID (以 U 或 C 開頭)
+const LINE_CHANNEL_ACCESS_TOKEN = "qVRDzJN8nj1Dc+Y5MI5dPIZyFBouLIllUB0lF0lhdALIoWv4LLiLHDM0Dzm5liU4yBs39i3Jdi1j+YLRpkpZD5ppPTdIa3CFlIxXkhwqCZSvB5X+I2wpiOxdHb8pP5YxgHCww4UKcZNy4wdvohHcFgdB04t89/1O/w1cDnyilFU=";
+const LINE_USER_ID = "U0670003881102246a2ccab750e1bd01c"; // 您的 LINE User ID 或 群組 ID (以 U 或 C 開頭)
 
 
 /**
