@@ -437,6 +437,7 @@ function handleEcpayCallback(params) {
     // 遍歷試算表尋找該筆訂單編號 (位於 A 欄，第 1 欄)
     const dataRange = sheet.getDataRange().getValues();
     let updated = false;
+    let orderData = null;
 
     for (let i = 1; i < dataRange.length; i++) {
       if (String(dataRange[i][0]).trim() === tradeNo) {
@@ -446,19 +447,49 @@ function handleEcpayCallback(params) {
         // 欄位 O (第 15 欄) 為「出貨狀態」
         sheet.getRange(rowNumber, 15).setValue("備貨中");
         updated = true;
+
+        orderData = {
+          orderId: tradeNo,
+          customerName: dataRange[i][6] || "貴賓",
+          customerPhone: dataRange[i][7] || "",
+          customerEmail: dataRange[i][8] || "",
+          plan: dataRange[i][2] || "SERENE Horizon 降噪耳機",
+          quantity: dataRange[i][3] || 1,
+          totalAmount: tradeAmt || dataRange[i][5] || 5999,
+          paymentDate: paymentDate,
+          paymentType: "綠界信用卡線上刷卡",
+          rtnMsg: rtnMsg
+        };
+
         Logger.log("試算表第 " + rowNumber + " 列訂單狀態已更新為【已付款】");
         break;
       }
     }
 
-    // 發送 LINE 刷卡成功即時推播
-    sendLinePaymentSuccessNotification({
-      orderId: tradeNo,
-      amount: tradeAmt,
-      paymentDate: paymentDate,
-      paymentType: paymentType,
-      rtnMsg: rtnMsg
-    });
+    // 1. 發送顧客「付款成功」電子郵件憑證
+    if (orderData && orderData.customerEmail && orderData.customerEmail.includes("@")) {
+      try {
+        sendPaymentSuccessEmail(orderData);
+        Logger.log("✅ 顧客信用卡付款成功信已發送至: " + orderData.customerEmail);
+      } catch (mailErr) {
+        Logger.log("❌ 顧客付款成功信發送失敗: " + mailErr.toString());
+      }
+    }
+
+    // 2. 發送 LINE 刷卡成功即時推播給管理員
+    try {
+      sendLinePaymentSuccessNotification({
+        orderId: tradeNo,
+        amount: tradeAmt,
+        paymentDate: paymentDate,
+        paymentType: paymentType,
+        rtnMsg: rtnMsg,
+        customerName: orderData ? orderData.customerName : ""
+      });
+      Logger.log("✅ LINE 刷卡成功推播已發送");
+    } catch (lineErr) {
+      Logger.log("❌ LINE 刷卡推播失敗: " + lineErr.toString());
+    }
   } else {
     Logger.log("綠界交易非成功代碼: " + rtnCode + " / " + rtnMsg);
   }
@@ -517,17 +548,150 @@ function sendLinePaymentSuccessNotification(payData) {
 }
 
 /**
- * 測試綠界刷卡成功推播
+ * 寄送顧客「信用卡付款成功」電子郵件憑證
+ * @param {Object} data 訂單付款資料
+ */
+function sendPaymentSuccessEmail(data) {
+  const subject = `【SERENE Horizon】信用卡授權成功·付款憑證確認（訂單編號：${data.orderId}）`;
+  const formattedTotal = Number(data.totalAmount).toLocaleString();
+
+  const htmlBody = `
+    <!DOCTYPE html>
+    <html>
+    <head>
+      <meta charset="utf-8">
+      <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans TC", sans-serif; background-color: #f7f7f9; margin: 0; padding: 20px; color: #333333; }
+        .container { max-width: 600px; margin: 0 auto; background: #ffffff; border-radius: 16px; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.06); border: 1px solid #eaeaea; }
+        .header { background: linear-gradient(135deg, #1A2518 0%, #253322 100%); color: #ffffff; padding: 36px 30px; text-align: center; }
+        .badge { display: inline-block; background: rgba(82, 196, 26, 0.2); border: 1px solid #52c41a; color: #95de64; font-size: 11px; padding: 4px 12px; border-radius: 20px; font-weight: bold; margin-bottom: 12px; text-transform: uppercase; letter-spacing: 1px; }
+        .header h1 { margin: 0; font-size: 22px; letter-spacing: 1px; color: #ffffff; }
+        .header p { margin: 8px 0 0 0; font-size: 13px; color: #b7d6b3; }
+        .content { padding: 32px 30px; }
+        .greeting { font-size: 16px; font-weight: bold; margin-bottom: 16px; color: #222; }
+        .success-banner { background: #f6ffed; border: 1px solid #b7eb8f; border-radius: 10px; padding: 14px 16px; margin-bottom: 24px; color: #274916; font-size: 13px; line-height: 1.6; }
+        .card { background: #faf8f5; border: 1px solid #eee5dc; border-radius: 12px; padding: 20px; margin-bottom: 24px; }
+        .card-title { font-size: 13px; font-weight: bold; color: #8C6D53; margin-bottom: 12px; text-transform: uppercase; letter-spacing: 1px; }
+        .notice-box { background: #fffdf7; border-left: 4px solid #52c41a; padding: 14px 16px; border-radius: 4px; font-size: 13px; line-height: 1.6; color: #385828; margin-bottom: 24px; }
+        .footer { background: #f2f0ec; padding: 20px 30px; text-align: center; font-size: 12px; color: #888; }
+      </style>
+    </head>
+    <body>
+      <div class="container">
+        <!-- Header -->
+        <div class="header">
+          <div class="badge">✓ 付款已授權成功</div>
+          <h1>SERENE Horizon</h1>
+          <p>線上信用卡付款成功確認憑證</p>
+        </div>
+
+        <!-- Content -->
+        <div class="content">
+          <div class="greeting">${data.customerName} 貴賓 您好：</div>
+          
+          <div class="success-banner">
+            <strong>★ 信用卡付款授權成功！</strong><br>
+            系統已收到綠界科技線上授權確認款項。您的預購訂單已由系統自動安排進入<strong>【VIP 優先備貨程序】</strong>，商品出貨時將第一時間發送簡訊與 Email 通知您。
+          </div>
+
+          <!-- Transaction Card -->
+          <div class="card">
+            <div class="card-title">付款交易憑證</div>
+            <table width="100%" cellpadding="6" cellspacing="0" style="font-size: 13px;">
+              <tr>
+                <td style="color: #777;">訂單編號：</td>
+                <td style="font-weight: bold; text-align: right; font-family: monospace;">${data.orderId}</td>
+              </tr>
+              <tr>
+                <td style="color: #777;">付款時間：</td>
+                <td style="text-align: right;">${data.paymentDate}</td>
+              </tr>
+              <tr>
+                <td style="color: #777;">訂購方案：</td>
+                <td style="font-weight: bold; text-align: right; color: #3A2A20;">${data.plan}</td>
+              </tr>
+              <tr>
+                <td style="color: #777;">訂購數量：</td>
+                <td style="text-align: right;">${data.quantity} 台</td>
+              </tr>
+              <tr>
+                <td style="color: #777;">支付方式：</td>
+                <td style="text-align: right; font-weight: 600;">綠界信用卡線上刷卡（一次付清）</td>
+              </tr>
+              <tr style="border-top: 2px solid #52c41a;">
+                <td style="font-size: 15px; font-weight: bold; padding-top: 10px;">刷卡實付金額：</td>
+                <td style="font-size: 18px; font-weight: bold; text-align: right; color: #237804; padding-top: 10px;">NT$ ${formattedTotal}</td>
+              </tr>
+            </table>
+          </div>
+
+          <!-- Shipping Notice -->
+          <div class="notice-box">
+            <strong>📦 後續出貨與售後安心保障：</strong><br>
+            • <strong>出貨通知</strong>：倉庫理貨完成交寄黑貓宅急便後，系統將寄發「出貨通知信」並附上即時物流貨態追蹤碼。<br>
+            • <strong>官方保固</strong>：自收件翌日起享有 1 年原廠硬體保固，以及收到後 7 天試聽鑑賞期無條件退換保障。<br>
+            • <strong>發票開立</strong>：電子發票將於鑑賞期過後自動開立並寄送至您的註冊載具或電子信箱。
+          </div>
+
+          <div style="font-size: 13px; color: #666; line-height: 1.6;">
+            如有任何訂單需求或欲變更收件資訊，歡迎隨時回覆此信件聯繫我們。<br>
+            再次感謝您的支持，期待 SERENE Horizon 為您帶來前所未有的純淨音質體驗！
+          </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+          SERENE Horizon Acoustic Taiwan · 官方旗艦直營<br>
+          客服信箱：support@serene-audio.tw ｜ 服務時間：週一至週五 09:30 - 18:30
+        </div>
+      </div>
+    </body>
+    </html>
+  `;
+
+  MailApp.sendEmail({
+    to: data.customerEmail,
+    subject: subject,
+    body: `SERENE Horizon 信用卡付款成功確認通知\n\n感謝您的付款！\n訂單編號：${data.orderId}\n方案：${data.plan}\n刷卡金額：NT$ ${formattedTotal}\n付款時間：${data.paymentDate}\n\n系統已排入優先出貨名單，請開啟 HTML 檢視完整憑證。`,
+    htmlBody: htmlBody
+  });
+}
+
+/**
+ * 測試綠界刷卡成功推播與付款成功確認信
  * （可在 Google Apps Script 介面上方下拉選單選取「testEcpayPaymentSuccess」並點擊「執行」進行測試）
  */
 function testEcpayPaymentSuccess() {
-  sendLinePaymentSuccessNotification({
+  const currentEmail = Session.getActiveUser().getEmail() || "your_email@gmail.com";
+  const testPayData = {
     orderId: "SRN" + Date.now().toString().slice(-9) + "9999",
+    customerName: "測試管理員",
+    customerEmail: currentEmail,
     amount: "5999",
+    plan: "尊榮旗艦 · 高階降噪版 (Pro ANC)",
+    quantity: 1,
+    totalAmount: 5999,
     paymentDate: Utilities.formatDate(new Date(), "Asia/Taipei", "yyyy-MM-dd HH:mm:ss"),
-    paymentType: "Credit_CreditCard",
-    rtnMsg: "Succeeded"
-  });
+    paymentType: "綠界信用卡線上刷卡（測試環境）",
+    rtnMsg: "Succeeded (授權成功)"
+  };
+
+  Logger.log("=== 測試綠界付款成功通知 ===");
+  // 1. 寄送付款成功確認信
+  try {
+    sendPaymentSuccessEmail(testPayData);
+    Logger.log("✅ 刷卡成功信件測試寄出至: " + testPayData.customerEmail);
+  } catch (e) {
+    Logger.log("❌ 刷卡成功信寄送失敗: " + e.toString());
+  }
+
+  // 2. LINE 推播
+  try {
+    sendLinePaymentSuccessNotification(testPayData);
+    Logger.log("✅ 刷卡成功 LINE 推播測試寄出");
+  } catch (e) {
+    Logger.log("❌ 刷卡成功 LINE 推播失敗: " + e.toString());
+  }
 }
 
 /**
@@ -536,11 +700,10 @@ function testEcpayPaymentSuccess() {
  * ==============================================================
  * 此函式會依序測試：
  * 1. 試算表寫入 (SpreadsheetApp)
- * 2. 寄送確認信 (MailApp)
- * 3. LINE 機器人即時推播 (UrlFetchApp)
- * 
- * 若有缺少 Google 帳號授權，點選「執行」時 Google 會立即跳出授權視窗，
- * 完成授權後，日後所有透過網頁送出的請求才能順暢執行！
+ * 2. 預購確認信 (MailApp)
+ * 3. 刷卡付款成功信 (MailApp)
+ * 4. LINE 預購推播 (UrlFetchApp)
+ * 5. LINE 刷卡成功推播 (UrlFetchApp)
  */
 function testAllServices() {
   const currentEmail = Session.getActiveUser().getEmail() || "your_email@gmail.com";
@@ -562,7 +725,7 @@ function testAllServices() {
   };
 
   Logger.log("=========================================");
-  Logger.log("🚀 開始執行全系統自我檢測流程...");
+  Logger.log("🚀 開始執行全系統五大功能自我檢測流程...");
   Logger.log("=========================================");
 
   // 1. 測試試算表寫入
@@ -581,23 +744,54 @@ function testAllServices() {
     Logger.log("❌ 1. 試算表寫入測試：失敗 -> " + e.toString());
   }
 
-  // 2. 測試顧客確認信寄送
+  // 2. 測試顧客預購確認信寄送
   try {
     sendOrderConfirmationEmail(testData);
-    Logger.log("✅ 2. Email 確認信寄送測試：成功！已寄至 " + testData.customerEmail);
+    Logger.log("✅ 2. 預購確認信測試：成功！已寄至 " + testData.customerEmail);
   } catch (e) {
-    Logger.log("❌ 2. Email 確認信寄送測試：失敗 -> " + e.toString());
+    Logger.log("❌ 2. 預購確認信測試：失敗 -> " + e.toString());
   }
 
-  // 3. 測試 LINE 即時推播
+  // 3. 測試顧客「信用卡付款成功」確認信寄送
+  try {
+    sendPaymentSuccessEmail({
+      orderId: testData.orderId,
+      customerName: testData.customerName,
+      customerEmail: testData.customerEmail,
+      plan: testData.plan,
+      quantity: testData.quantity,
+      totalAmount: testData.totalAmount,
+      paymentDate: testData.timestamp
+    });
+    Logger.log("✅ 3. 刷卡付款成功信測試：成功！已寄至 " + testData.customerEmail);
+  } catch (e) {
+    Logger.log("❌ 3. 刷卡付款成功信測試：失敗 -> " + e.toString());
+  }
+
+  // 4. 測試 LINE 預購即時推播
   try {
     sendLineNotification(testData);
-    Logger.log("✅ 3. LINE 推播測試：成功！已向 LINE 發送請求");
+    Logger.log("✅ 4. LINE 預購推播測試：成功！");
   } catch (e) {
-    Logger.log("❌ 3. LINE 推播測試：失敗 -> " + e.toString());
+    Logger.log("❌ 4. LINE 預購推播測試：失敗 -> " + e.toString());
+  }
+
+  // 5. 測試 LINE 刷卡成功即時推播
+  try {
+    sendLinePaymentSuccessNotification({
+      orderId: testData.orderId,
+      amount: testData.totalAmount,
+      paymentDate: testData.timestamp,
+      paymentType: "綠界信用卡線上刷卡",
+      rtnMsg: "Succeeded (診斷測試)",
+      customerName: testData.customerName
+    });
+    Logger.log("✅ 5. LINE 刷卡成功推播測試：成功！");
+  } catch (e) {
+    Logger.log("❌ 5. LINE 刷卡成功推播測試：失敗 -> " + e.toString());
   }
 
   Logger.log("=========================================");
-  Logger.log("🎉 檢測執行完畢！請查看試算表、您的信箱與手機 LINE 是否均有收到！");
+  Logger.log("🎉 全系統五大功能檢測執行完畢！請查看試算表、您的信箱與手機 LINE 是否均有收到！");
   Logger.log("=========================================");
 }
