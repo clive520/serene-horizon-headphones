@@ -39,6 +39,14 @@ const HEADERS = [
   "出貨狀態"
 ];
 
+// ==============================================================
+// 【LINE Messaging API 推播設定】
+// 請填入您在 LINE Developers 申請的 Channel Access Token 與您的 User ID (或群組 Group ID)
+// ==============================================================
+const LINE_CHANNEL_ACCESS_TOKEN = "YOUR_LINE_CHANNEL_ACCESS_TOKEN_HERE";
+const LINE_USER_ID = "YOUR_LINE_USER_ID_HERE"; // 您的 LINE User ID 或 群組 ID (以 U 或 C 開頭)
+
+
 /**
  * 處理 POST 請求 (接收訂單並寫入試算表 + 寄信)
  */
@@ -92,6 +100,11 @@ function doPost(e) {
     // 寄送顧客確認信
     if (data.customerEmail && data.customerEmail.includes("@")) {
       sendOrderConfirmationEmail(data);
+    }
+
+    // 發送 LINE 即時通知給管理員
+    if (LINE_CHANNEL_ACCESS_TOKEN && !LINE_CHANNEL_ACCESS_TOKEN.includes("YOUR_LINE_")) {
+      sendLineNotification(data);
     }
 
     // 回傳成功訊息
@@ -286,4 +299,85 @@ function sendOrderConfirmationEmail(data) {
     subject: subject,
     htmlBody: htmlBody
   });
+}
+
+/**
+ * ==============================================================
+ * LINE 即時訂單通知模組 (LINE Messaging API)
+ * ==============================================================
+ */
+
+/**
+ * 發送 LINE 即時通知給管理員
+ * @param {Object} data 訂單資料
+ */
+function sendLineNotification(data) {
+  if (!LINE_CHANNEL_ACCESS_TOKEN || !LINE_USER_ID) return;
+
+  const url = "https://api.line.me/v2/bot/message/push";
+  
+  const messageText = 
+`🔔【SERENE Horizon 收到新預購訂單】
+
+📋 訂單編號：${data.orderId || "未提供"}
+🕒 下單時間：${data.timestamp || "即時"}
+🎧 預購方案：${data.plan}
+📦 訂購數量：${data.quantity || 1} 台
+💰 應付總額：NT$ ${Number(data.totalAmount || 0).toLocaleString()}
+
+👤 顧客姓名：${data.customerName}
+📞 聯絡電話：${data.customerPhone}
+✉️ 電子信箱：${data.customerEmail}
+📍 配送地址：${data.customerAddress}
+🧾 發票類型：${data.invoiceType || "個人雲端發票"}
+📝 訂單備註：${data.notes || "無"}
+
+💳 付款狀態：待付款（準備前往綠界信用卡刷卡）
+🚚 出貨狀態：待處理`;
+
+  const payload = {
+    to: LINE_USER_ID,
+    messages: [
+      {
+        type: "text",
+        text: messageText
+      }
+    ]
+  };
+
+  try {
+    const response = UrlFetchApp.fetch(url, {
+      method: "post",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer " + LINE_CHANNEL_ACCESS_TOKEN
+      },
+      payload: JSON.stringify(payload),
+      muteHttpExceptions: true
+    });
+    Logger.log("LINE 推播回應碼：" + response.getResponseCode());
+  } catch (err) {
+    Logger.log("LINE 推播失敗：" + err.toString());
+  }
+}
+
+/**
+ * 測試 LINE 推播功能是否正常運作
+ * （可在 Google Apps Script 介面上方下拉選單選取「testLinePush」並點擊「執行」進行測試）
+ */
+function testLinePush() {
+  const testData = {
+    orderId: "SRN-TEST-" + Math.floor(1000 + Math.random() * 9000),
+    timestamp: Utilities.formatDate(new Date(), "Asia/Taipei", "yyyy-MM-dd HH:mm:ss"),
+    plan: "尊榮旗艦 · 高階降噪版 (Pro ANC)",
+    quantity: 1,
+    totalAmount: 5999,
+    customerName: "測試管理員",
+    customerPhone: "0912-345-678",
+    customerEmail: "admin@test.com",
+    customerAddress: "台北市信義區信義路五段7號",
+    invoiceType: "手機條碼載具",
+    notes: "這是一則測試通知"
+  };
+  sendLineNotification(testData);
 }
