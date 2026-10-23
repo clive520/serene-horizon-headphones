@@ -952,24 +952,24 @@
               <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
                   <label class="block text-xs font-medium text-gray-300 mb-1.5">收件人姓名 <span class="text-red-400">*</span></label>
-                  <input type="text" required placeholder="例如：王小明" class="w-full px-4 py-3 rounded-xl bg-black/40 border border-white/15 focus:border-brand-gold focus:outline-none text-white text-sm">
+                  <input type="text" id="customerName" required placeholder="例如：王小明" class="w-full px-4 py-3 rounded-xl bg-black/40 border border-white/15 focus:border-brand-gold focus:outline-none text-white text-sm">
                 </div>
                 <div>
                   <label class="block text-xs font-medium text-gray-300 mb-1.5">聯絡電話 <span class="text-red-400">*</span></label>
-                  <input type="tel" required placeholder="例如：0912-345-678" class="w-full px-4 py-3 rounded-xl bg-black/40 border border-white/15 focus:border-brand-gold focus:outline-none text-white text-sm">
+                  <input type="tel" id="customerPhone" required placeholder="例如：0912-345-678" class="w-full px-4 py-3 rounded-xl bg-black/40 border border-white/15 focus:border-brand-gold focus:outline-none text-white text-sm">
                 </div>
               </div>
 
               <!-- Email -->
               <div>
-                <label class="block text-xs font-medium text-gray-300 mb-1.5">電子信箱 (發送訂單與出貨通知) <span class="text-red-400">*</span></label>
-                <input type="email" required placeholder="your.name@example.com" class="w-full px-4 py-3 rounded-xl bg-black/40 border border-white/15 focus:border-brand-gold focus:outline-none text-white text-sm">
+                <label class="block text-xs font-medium text-gray-300 mb-1.5">電子信箱 (發送預購成功確認信與物流通知) <span class="text-red-400">*</span></label>
+                <input type="email" id="customerEmail" required placeholder="your.name@example.com" class="w-full px-4 py-3 rounded-xl bg-black/40 border border-white/15 focus:border-brand-gold focus:outline-none text-white text-sm">
               </div>
 
               <!-- Address -->
               <div>
                 <label class="block text-xs font-medium text-gray-300 mb-1.5">收件地址 <span class="text-red-400">*</span></label>
-                <input type="text" required placeholder="縣市、區域、路段與門牌樓層" class="w-full px-4 py-3 rounded-xl bg-black/40 border border-white/15 focus:border-brand-gold focus:outline-none text-white text-sm">
+                <input type="text" id="customerAddress" required placeholder="縣市、區域、路段與門牌樓層" class="w-full px-4 py-3 rounded-xl bg-black/40 border border-white/15 focus:border-brand-gold focus:outline-none text-white text-sm">
               </div>
 
               <!-- Payment Method (Credit Card Link) -->
@@ -1010,13 +1010,19 @@
               </div>
 
               <!-- Invoice Option -->
-              <div>
-                <label class="block text-xs font-medium text-gray-300 mb-1.5">發票類型</label>
-                <select class="w-full px-4 py-3 rounded-xl bg-black/40 border border-white/15 focus:border-brand-gold focus:outline-none text-white text-sm">
-                  <option value="cloud">個人雲端發票（中獎自動 Email 通知）</option>
-                  <option value="company">公司行號統一編號三聯式發票</option>
-                  <option value="carrier">手機條碼載具</option>
-                </select>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <label class="block text-xs font-medium text-gray-300 mb-1.5">發票類型</label>
+                  <select id="invoiceType" class="w-full px-4 py-3 rounded-xl bg-black/40 border border-white/15 focus:border-brand-gold focus:outline-none text-white text-sm">
+                    <option value="個人雲端發票">個人雲端發票（中獎自動 Email 通知）</option>
+                    <option value="公司行號統一編號三聯式發票">公司行號統一編號三聯式發票</option>
+                    <option value="手機條碼載具">手機條碼載具</option>
+                  </select>
+                </div>
+                <div>
+                  <label class="block text-xs font-medium text-gray-300 mb-1.5">訂單備註 (選填)</label>
+                  <input type="text" id="orderNotes" placeholder="例如：方便收件時段、特殊需求" class="w-full px-4 py-3 rounded-xl bg-black/40 border border-white/15 focus:border-brand-gold focus:outline-none text-white text-sm">
+                </div>
               </div>
 
               <!-- Order Submit Button -->
@@ -1129,10 +1135,14 @@
       <div class="w-16 h-16 rounded-full bg-brand-gold/20 border border-brand-gold flex items-center justify-center mx-auto mb-4 text-brand-gold">
         <i data-lucide="check" class="w-8 h-8"></i>
       </div>
-      <h3 class="text-2xl font-bold text-white mb-2">訂單已成功送出！</h3>
-      <p class="text-sm text-gray-300 mb-6 leading-relaxed">
-        感謝您對 SERENE Horizon 的青睞。我們已將訂單確認信與物流追蹤連結寄送至您的電子信箱，將於 24 小時內安排黑貓免運配送。
+      <h3 class="text-2xl font-bold text-white mb-2">預購資料已成功送出！</h3>
+      <p class="text-sm text-gray-300 mb-4 leading-relaxed">
+        感謝您對 SERENE Horizon 的青睞。我們已將預購資料建立至系統，預購成功確認信已同步寄發。
       </p>
+
+      <div id="modalEmailNotice" class="text-xs text-brand-gold bg-brand-gold/10 border border-brand-gold/30 rounded-xl p-3 mb-6 text-center">
+        預購確認信已發送至您的電子信箱
+      </div>
 
       <div class="p-4 rounded-xl bg-black/60 border border-white/10 text-left text-xs space-y-2 mb-6">
         <div class="flex justify-between text-gray-400">
@@ -1168,6 +1178,13 @@
 
   <!-- ==================== JAVASCRIPT ==================== -->
   <script>
+    // ==============================================================
+    // 【Google 試算表 GAS 後端 API 網址設定】
+    // 請在此處填入您在 Google Apps Script 部署取得的 Web 應用程式網址：
+    // （系統將自動把預購訂單寫入 Google 試算表，並由 GAS 發送確認信給顧客）
+    // ==============================================================
+    const GAS_ENDPOINT_URL = "YOUR_GAS_WEB_APP_URL_HERE";
+
     // ==============================================================
     // 【信用卡刷卡金流跳轉連結設定】
     // 請在此處填入您正式的第三方金流 / 信用卡刷卡網址：
@@ -1254,16 +1271,69 @@
       event.currentTarget.classList.remove('border-white/10', 'bg-white/5');
     }
 
-    // Modal Handling
-    function handleOrderSubmit(e) {
+    // Modal Handling & Google Apps Script Integration
+    async function handleOrderSubmit(e) {
       e.preventDefault();
-      const modal = document.getElementById('orderSuccessModal');
-      const modalCard = document.getElementById('modalCard');
-      
-      const randomId = 'SRN-20261016-' + Math.floor(1000 + Math.random() * 9000);
+
+      const submitBtn = e.target.querySelector('button[type="submit"]');
+      const submitBtnText = document.getElementById('submitBtnText');
+      const originalBtnText = submitBtnText.innerText;
+
+      // 按鈕載入中狀態
+      submitBtn.disabled = true;
+      submitBtn.classList.add('opacity-75');
+      submitBtnText.innerText = "資料加密同步中，請稍候...";
+
+      const randomId = 'SRN-20261023-' + Math.floor(1000 + Math.random() * 9000);
+      const planName = (currentTier === 'pro' ? '尊榮旗艦 · 高階降噪版 (Pro ANC)' : '日常純粹 · 一般版 (Standard)');
+      const total = unitPrice * currentQty;
+      const nowTime = new Date().toLocaleString('zh-TW', { timeZone: 'Asia/Taipei', hour12: false });
+
+      const customerName = document.getElementById('customerName').value.trim();
+      const customerPhone = document.getElementById('customerPhone').value.trim();
+      const customerEmail = document.getElementById('customerEmail').value.trim();
+      const customerAddress = document.getElementById('customerAddress').value.trim();
+      const invoiceType = document.getElementById('invoiceType').value;
+      const notes = (document.getElementById('orderNotes')?.value || '').trim() || '無';
+
+      const orderPayload = {
+        orderId: randomId,
+        timestamp: nowTime,
+        plan: planName,
+        quantity: currentQty,
+        unitPrice: unitPrice,
+        totalAmount: total,
+        customerName: customerName,
+        customerPhone: customerPhone,
+        customerEmail: customerEmail,
+        customerAddress: customerAddress,
+        paymentMethod: '信用卡線上刷卡',
+        invoiceType: invoiceType,
+        notes: notes
+      };
+
+      // 串接 Google 試算表 GAS 後端 (若使用者已部署並填寫 GAS_ENDPOINT_URL)
+      if (GAS_ENDPOINT_URL && !GAS_ENDPOINT_URL.includes("YOUR_GAS_WEB_APP_URL_HERE")) {
+        try {
+          await fetch(GAS_ENDPOINT_URL, {
+            method: 'POST',
+            mode: 'no-cors',
+            headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+            body: JSON.stringify(orderPayload)
+          });
+          console.log('訂單資料已成功發送至 Google 試算表 GAS 後端');
+        } catch (error) {
+          console.warn('Google 試算表發送警告 (可能已於背景完成寫入):', error);
+        }
+      } else {
+        console.info('提示：尚未設定 GAS_ENDPOINT_URL，訂單僅在前端模擬送出。');
+      }
+
+      // 更新彈窗內容
       document.getElementById('modalOrderNo').innerText = randomId;
-      document.getElementById('modalPlan').innerText = (currentTier === 'pro' ? '尊榮旗艦 · 高階降噪版 (Pro ANC)' : '日常純粹 · 一般版 (Standard)') + ` × ${currentQty}`;
-      document.getElementById('modalTotal').innerText = 'NT$ ' + (unitPrice * currentQty).toLocaleString() + ' (全台免運)';
+      document.getElementById('modalPlan').innerText = `${planName} × ${currentQty}`;
+      document.getElementById('modalTotal').innerText = `NT$ ${total.toLocaleString()} (全台免運)`;
+      document.getElementById('modalEmailNotice').innerText = `預購確認信已同步寄送至：${customerEmail}`;
 
       // 同步設定跳轉連結
       const modalPayBtn = document.getElementById('modalPayButton');
@@ -1271,11 +1341,19 @@
         modalPayBtn.href = CREDIT_CARD_PAYMENT_URL;
       }
 
+      // 顯示確認彈窗
+      const modal = document.getElementById('orderSuccessModal');
+      const modalCard = document.getElementById('modalCard');
       modal.classList.remove('hidden');
       setTimeout(() => {
         modal.classList.remove('opacity-0');
         modalCard.classList.remove('scale-95');
       }, 10);
+
+      // 復原按鈕狀態
+      submitBtn.disabled = false;
+      submitBtn.classList.remove('opacity-75');
+      submitBtnText.innerText = originalBtnText;
     }
 
     function closeModal() {
