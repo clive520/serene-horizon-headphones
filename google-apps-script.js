@@ -104,23 +104,42 @@ function doPost(e) {
       "待處理"
     ];
 
-    // 新增至試算表最末列
-    sheet.appendRow(row);
-
-    // 寄送顧客確認信
-    if (data.customerEmail && data.customerEmail.includes("@")) {
-      sendOrderConfirmationEmail(data);
+    // 1. 新增至試算表最末列 (獨立捕捉例外，不影響後續發信與推播)
+    try {
+      sheet.appendRow(row);
+      Logger.log("✅ 試算表寫入成功: " + (data.orderId || ""));
+    } catch (sheetErr) {
+      Logger.log("❌ 試算表寫入失敗: " + sheetErr.toString());
     }
 
-    // 發送 LINE 即時通知給管理員
-    if (LINE_CHANNEL_ACCESS_TOKEN && !LINE_CHANNEL_ACCESS_TOKEN.includes("YOUR_LINE_")) {
-      sendLineNotification(data);
+    // 2. 寄送顧客確認信 (獨立捕捉例外，即使發信失敗也不中斷 LINE 推播)
+    try {
+      if (data.customerEmail && data.customerEmail.includes("@")) {
+        sendOrderConfirmationEmail(data);
+        Logger.log("✅ 顧客確認信發送成功: " + data.customerEmail);
+      } else {
+        Logger.log("⚠️ 顧客未填寫有效 Email，略過寄信");
+      }
+    } catch (mailErr) {
+      Logger.log("❌ 顧客確認信寄送失敗: " + mailErr.toString());
+    }
+
+    // 3. 發送 LINE 即時通知給管理員 (獨立捕捉例外)
+    try {
+      if (LINE_CHANNEL_ACCESS_TOKEN && !LINE_CHANNEL_ACCESS_TOKEN.includes("YOUR_LINE_")) {
+        sendLineNotification(data);
+        Logger.log("✅ LINE 訂單推播成功");
+      } else {
+        Logger.log("⚠️ 尚未設定 LINE_CHANNEL_ACCESS_TOKEN，略過 LINE 推播");
+      }
+    } catch (lineErr) {
+      Logger.log("❌ LINE 推播失敗: " + lineErr.toString());
     }
 
     // 回傳成功訊息
     return ContentService.createTextOutput(JSON.stringify({
       status: "success",
-      message: "預購訂單已成功儲存並發送確認信",
+      message: "預購訂單處理完成",
       orderId: data.orderId
     })).setMimeType(ContentService.MimeType.JSON);
 
@@ -303,10 +322,11 @@ function sendOrderConfirmationEmail(data) {
     </html>
   `;
 
-  // 寄出郵件
+  // 寄出郵件 (附帶純文字 fallback 內容以確保相容性與權限檢核)
   MailApp.sendEmail({
     to: data.customerEmail,
     subject: subject,
+    body: `SERENE Horizon 預購成功確認通知\n\n感謝您的預購！\n訂單編號：${data.orderId}\n方案：${data.plan}\n總額：NT$ ${formattedTotal}\n\n此郵件包含排版明細，請在支援 HTML 的郵件客戶端中檢視。`,
     htmlBody: htmlBody
   });
 }
@@ -508,4 +528,76 @@ function testEcpayPaymentSuccess() {
     paymentType: "Credit_CreditCard",
     rtnMsg: "Succeeded"
   });
+}
+
+/**
+ * ==============================================================
+ * 一鍵自我診斷測試函式 (請直接在 Apps Script 介面按「執行」測試)
+ * ==============================================================
+ * 此函式會依序測試：
+ * 1. 試算表寫入 (SpreadsheetApp)
+ * 2. 寄送確認信 (MailApp)
+ * 3. LINE 機器人即時推播 (UrlFetchApp)
+ * 
+ * 若有缺少 Google 帳號授權，點選「執行」時 Google 會立即跳出授權視窗，
+ * 完成授權後，日後所有透過網頁送出的請求才能順暢執行！
+ */
+function testAllServices() {
+  const currentEmail = Session.getActiveUser().getEmail() || "your_email@gmail.com";
+  
+  const testData = {
+    orderId: "SRN" + Date.now().toString().slice(-9) + "8888",
+    timestamp: Utilities.formatDate(new Date(), "Asia/Taipei", "yyyy-MM-dd HH:mm:ss"),
+    plan: "尊榮旗艦 · 高階降噪版 (Pro ANC)",
+    quantity: 1,
+    unitPrice: 5999,
+    totalAmount: 5999,
+    customerName: "測試管理員",
+    customerPhone: "0912-345-678",
+    customerEmail: currentEmail,
+    customerAddress: "台北市信義區信義路五段7號",
+    paymentMethod: "信用卡線上刷卡",
+    invoiceType: "個人雲端發票",
+    notes: "一鍵完整自我診斷測試"
+  };
+
+  Logger.log("=========================================");
+  Logger.log("🚀 開始執行全系統自我檢測流程...");
+  Logger.log("=========================================");
+
+  // 1. 測試試算表寫入
+  try {
+    const sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
+    if (sheet.getLastRow() === 0) setupHeaders(sheet);
+    sheet.appendRow([
+      testData.orderId, testData.timestamp, testData.plan, testData.quantity,
+      testData.unitPrice, testData.totalAmount, testData.customerName,
+      testData.customerPhone, testData.customerEmail, testData.customerAddress,
+      testData.paymentMethod, testData.invoiceType, testData.notes,
+      "待付款 (診斷測試中)", "待處理"
+    ]);
+    Logger.log("✅ 1. 試算表寫入測試：成功！已寫入第 " + sheet.getLastRow() + " 列");
+  } catch (e) {
+    Logger.log("❌ 1. 試算表寫入測試：失敗 -> " + e.toString());
+  }
+
+  // 2. 測試顧客確認信寄送
+  try {
+    sendOrderConfirmationEmail(testData);
+    Logger.log("✅ 2. Email 確認信寄送測試：成功！已寄至 " + testData.customerEmail);
+  } catch (e) {
+    Logger.log("❌ 2. Email 確認信寄送測試：失敗 -> " + e.toString());
+  }
+
+  // 3. 測試 LINE 即時推播
+  try {
+    sendLineNotification(testData);
+    Logger.log("✅ 3. LINE 推播測試：成功！已向 LINE 發送請求");
+  } catch (e) {
+    Logger.log("❌ 3. LINE 推播測試：失敗 -> " + e.toString());
+  }
+
+  Logger.log("=========================================");
+  Logger.log("🎉 檢測執行完畢！請查看試算表、您的信箱與手機 LINE 是否均有收到！");
+  Logger.log("=========================================");
 }
