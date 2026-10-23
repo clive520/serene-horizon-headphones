@@ -1,0 +1,1292 @@
+<!DOCTYPE html>
+<html lang="zh-TW" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SERENE Horizon | 空間自適應降噪無線耳機 - 白棕極致美學</title>
+  <meta name="description" content="SERENE Horizon 空間自適應降噪無線耳機。燕麥白與摩卡棕的極簡美學交織，-45dB 旗艦主動降噪，40mm 鍍鈹複合單體，給您沉浸心流的純粹聆聽享受。">
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Google Fonts: Inter & Noto Sans TC -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Noto+Sans+TC:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              gold: '#D4AF37',
+              goldLight: '#E8D5A0',
+              goldDark: '#997B24',
+              cream: '#F7F4EE',
+              mocha: '#5C4436',
+              mochaDark: '#3A2A20',
+              darkBg: '#09090B',
+              darkSurface: '#121217',
+              darkCard: '#181822',
+              borderDark: '#262635'
+            }
+          },
+          fontFamily: {
+            sans: ['Inter', 'Noto Sans TC', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    body {
+      background-color: #09090B;
+      color: #F3F4F6;
+      font-family: 'Inter', 'Noto Sans TC', sans-serif;
+      overflow-x: hidden;
+    }
+    
+    /* Subtle metallic text gradient */
+    .text-gold-gradient {
+      background: linear-gradient(135deg, #FFF3D6 0%, #D4AF37 50%, #B89028 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .text-pearl-gradient {
+      background: linear-gradient(180deg, #FFFFFF 0%, #D1D5DB 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .glass-card {
+      background: rgba(24, 24, 34, 0.75);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .glass-nav {
+      background: rgba(9, 9, 11, 0.85);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .glow-gold {
+      box-shadow: 0 0 35px -5px rgba(212, 175, 55, 0.25);
+    }
+
+    .glow-soft {
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+    }
+
+    /* Custom scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #09090B;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #272733;
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #3E3E52;
+    }
+  </style>
+</head>
+<body class="antialiased selection:bg-brand-gold selection:text-black">
+
+  <!-- ==================== STICKY NAV ==================== -->
+  <header class="fixed top-0 left-0 right-0 z-50 glass-nav transition-all duration-300" id="mainHeader">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+      <!-- Logo -->
+      <a href="#" class="flex items-center gap-3 group">
+        <div class="w-10 h-10 rounded-full bg-gradient-to-tr from-brand-mocha to-brand-gold flex items-center justify-center p-0.5">
+          <div class="w-full h-full bg-brand-darkBg rounded-full flex items-center justify-center">
+            <i data-lucide="headphones" class="w-5 h-5 text-brand-goldLight transition-transform group-hover:scale-110"></i>
+          </div>
+        </div>
+        <div>
+          <span class="text-xl font-bold tracking-widest text-white block leading-none">SERENE</span>
+          <span class="text-[10px] tracking-widest uppercase text-brand-gold font-medium">Horizon Acoustic</span>
+        </div>
+      </a>
+
+      <!-- Desktop Nav -->
+      <nav class="hidden md:flex items-center gap-8 text-sm font-medium text-gray-300">
+        <a href="#features" class="hover:text-brand-goldLight transition-colors">極靜心流</a>
+        <a href="#three-views" class="hover:text-brand-goldLight transition-colors">工藝之境</a>
+        <a href="#lifestyle" class="hover:text-brand-goldLight transition-colors">詩意隨行</a>
+        <a href="#acoustics" class="hover:text-brand-goldLight transition-colors">純粹聲學</a>
+        <a href="#comparison" class="hover:text-brand-goldLight transition-colors">二重序曲</a>
+        <a href="#reviews" class="hover:text-brand-goldLight transition-colors">雅客心聲</a>
+        <a href="#faq" class="hover:text-brand-goldLight transition-colors">常見釋疑</a>
+      </nav>
+
+      <!-- CTA Nav Button -->
+      <div class="flex items-center gap-4">
+        <a href="#order" class="relative inline-flex items-center justify-center px-6 py-2.5 text-sm font-semibold tracking-wide text-brand-darkBg transition-all duration-300 bg-gradient-to-r from-brand-goldLight via-brand-gold to-brand-goldDark rounded-full hover:shadow-[0_0_20px_rgba(212,175,55,0.4)] hover:scale-105 active:scale-95">
+          <span>典藏入席 · NT$ 3,999 起</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- ==================== HERO SECTION ==================== -->
+  <section class="relative pt-32 pb-20 md:pt-44 md:pb-32 overflow-hidden bg-gradient-to-b from-brand-darkSurface via-brand-darkBg to-brand-darkBg">
+    <!-- Ambient Lighting Glows -->
+    <div class="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[500px] bg-brand-gold/10 blur-[130px] rounded-full pointer-events-none"></div>
+    <div class="absolute top-1/3 left-1/4 w-[400px] h-[400px] bg-brand-mocha/20 blur-[120px] rounded-full pointer-events-none"></div>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      <div class="text-center max-w-4xl mx-auto">
+        <!-- Series Badge -->
+        <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-brand-gold/30 bg-brand-gold/5 text-brand-goldLight text-xs tracking-widest uppercase font-semibold mb-6">
+          <span class="w-2 h-2 rounded-full bg-brand-gold animate-pulse"></span>
+          2026 旗艦序幕 · 燕麥白與摩卡暖棕的詩性共鳴
+        </div>
+
+        <!-- Main Title -->
+        <h1 class="text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight mb-6 leading-[1.15]">
+          <span class="text-pearl-gradient">極靜之境</span>
+          <span class="text-gold-gradient block mt-1">溫潤之聲</span>
+        </h1>
+
+        <!-- Subtitle -->
+        <p class="text-lg sm:text-xl text-gray-400 font-light max-w-2xl mx-auto leading-relaxed mb-10">
+          溫潤燕麥白交織沉靜摩卡棕，揉合 <span class="text-white font-medium">-45dB 自適應靜謐科技</span> 與 <span class="text-white font-medium">40mm 空間沉浸聲學</span>。每一次配戴，都是一段將塵囂溫柔隔絕、與靈魂深處對話的心流旅程。
+        </p>
+
+        <!-- CTA Action Buttons -->
+        <div class="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16">
+          <a href="#order" class="w-full sm:w-auto px-8 py-4 rounded-full bg-gradient-to-r from-brand-goldLight via-brand-gold to-brand-goldDark text-brand-darkBg font-bold text-base tracking-wide shadow-[0_10px_30px_rgba(212,175,55,0.3)] hover:shadow-[0_15px_40px_rgba(212,175,55,0.5)] hover:scale-105 transition-all">
+            品味溫潤之聲 · 探索雙版本方案
+          </a>
+          <a href="#three-views" class="w-full sm:w-auto px-8 py-4 rounded-full border border-white/20 bg-white/5 hover:bg-white/10 text-white font-medium text-base transition-all flex items-center justify-center gap-2 group">
+            <span>觸碰心流之境</span>
+            <i data-lucide="arrow-down" class="w-4 h-4 text-brand-gold transition-transform group-hover:translate-y-1"></i>
+          </a>
+        </div>
+
+        <!-- Hero Feature Badges -->
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto pt-6 border-t border-white/10">
+          <div class="flex items-center justify-center gap-3 text-left py-2">
+            <i data-lucide="shield-check" class="w-6 h-6 text-brand-gold shrink-0"></i>
+            <div>
+              <div class="text-white font-bold text-sm leading-tight">真境寂靜</div>
+              <div class="text-gray-400 text-xs">-45dB 自適應濾噪</div>
+            </div>
+          </div>
+          <div class="flex items-center justify-center gap-3 text-left py-2">
+            <i data-lucide="sparkles" class="w-6 h-6 text-brand-gold shrink-0"></i>
+            <div>
+              <div class="text-white font-bold text-sm leading-tight">寬廣音場</div>
+              <div class="text-gray-400 text-xs">40mm 空間沉浸聲學</div>
+            </div>
+          </div>
+          <div class="flex items-center justify-center gap-3 text-left py-2">
+            <i data-lucide="feather" class="w-6 h-6 text-brand-gold shrink-0"></i>
+            <div>
+              <div class="text-white font-bold text-sm leading-tight">輕若浮雲</div>
+              <div class="text-gray-400 text-xs">雲柔透氣蛋白皮</div>
+            </div>
+          </div>
+          <div class="flex items-center justify-center gap-3 text-left py-2">
+            <i data-lucide="battery-charging" class="w-6 h-6 text-brand-gold shrink-0"></i>
+            <div>
+              <div class="text-white font-bold text-sm leading-tight">悠長相伴</div>
+              <div class="text-gray-400 text-xs">60 小時音樂航程</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Hero Visual Showcase Banner -->
+      <div class="mt-16 relative max-w-5xl mx-auto rounded-3xl overflow-hidden glass-card p-3 sm:p-5 glow-soft border border-white/10 group">
+        <div class="relative rounded-2xl overflow-hidden bg-gradient-to-b from-[#2A2624]/40 to-black/80 aspect-[16/10] sm:aspect-[16/9] flex items-center justify-center">
+          <img src="images/three_views.jpg" alt="SERENE Horizon 白棕旗艦無線耳機三視圖展示" class="w-full h-full object-cover object-center group-hover:scale-102 transition-transform duration-700">
+          
+          <!-- Floating Interactive Callouts -->
+          <div class="absolute bottom-6 left-6 right-6 flex flex-wrap items-center justify-between gap-4 p-4 rounded-xl bg-black/60 backdrop-blur-md border border-white/10">
+            <div class="flex items-center gap-3">
+              <span class="w-3 h-3 rounded-full bg-brand-gold"></span>
+              <span class="text-sm font-medium text-white">一抹燕麥白，一縷摩卡暖 · 讓聲響化作指尖與耳畔的溫度</span>
+            </div>
+            <a href="#order" class="text-xs font-semibold text-brand-gold hover:underline flex items-center gap-1">
+              探索典藏方案 <i data-lucide="chevron-right" class="w-3.5 h-3.5"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== SECTION: CRAFTSMANSHIP & PERSPECTIVES ==================== -->
+  <section id="three-views" class="py-28 relative bg-brand-darkSurface/60 border-t border-b border-white/5">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center max-w-3xl mx-auto mb-16">
+        <p class="text-brand-gold font-semibold tracking-widest text-xs uppercase mb-3">Sculpted Silence & Craftsmanship</p>
+        <h2 class="text-3xl sm:text-5xl font-bold text-white tracking-tight">全維工藝 · 於靜止處遇見純粹輪廓</h2>
+        <p class="mt-4 text-gray-400 text-base leading-relaxed">
+          褪去繁複雕飾，將北歐極簡線條融入人體工學。正面的對稱張力、側面的溫柔弧度、與耳際親密貼合的立體包覆，在光影流轉間靜靜綻放。
+        </p>
+      </div>
+
+      <!-- Interactive View Switcher -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+        <!-- Visual Display Card (8 cols) -->
+        <div class="lg:col-span-8 glass-card rounded-3xl p-4 sm:p-6 relative border border-white/10 overflow-hidden">
+          <div class="relative w-full aspect-[4/3] rounded-2xl overflow-hidden bg-[#16161c] flex items-center justify-center">
+            <!-- Dynamic Images -->
+            <img id="activeViewImg" src="images/three_views.jpg" alt="耳機多角度展示" class="w-full h-full object-contain p-4 transition-all duration-500">
+            
+            <div class="absolute top-4 left-4 px-3 py-1 rounded-full bg-black/60 backdrop-blur-md border border-white/10 text-xs text-brand-gold font-medium" id="viewTag">
+              全維凝視 · 經典三視 (The Master View)
+            </div>
+          </div>
+
+          <!-- Angle Selector Tabs -->
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 mt-4">
+            <button onclick="switchView('master', 'images/three_views.jpg', '全維凝視 (The Master View)', '同時凝視正面、側面與立體視角，完美呈現燕麥白與摩卡暖棕的優雅撞色與比例美學。')" class="view-btn active p-3 rounded-xl bg-white/10 border border-brand-gold text-center transition-all">
+              <span class="block text-xs font-semibold text-white">全維凝視</span>
+              <span class="text-[10px] text-brand-gold block mt-0.5">經典全覽</span>
+            </button>
+            <button onclick="switchView('front', 'images/view_front.jpg', '對稱天成 (Symmetrical Balance)', '專為亞洲頭型輪廓雕琢，弧度溫柔分散頭頂重量，不壓髮型、告別夾持壓迫。')" class="view-btn p-3 rounded-xl bg-white/5 border border-white/10 hover:border-brand-gold/50 text-center transition-all">
+              <span class="block text-xs font-semibold text-white">對稱天成</span>
+              <span class="text-[10px] text-gray-400 block mt-0.5">端莊均衡</span>
+            </button>
+            <button onclick="switchView('side', 'images/view_side.jpg', '微弧流光 (Pure Silhouette)', '一體式流暢外蓋，無突兀商標與冗餘線條，觸碰靈敏，呈現如雕塑般的靜謐存在。')" class="view-btn p-3 rounded-xl bg-white/5 border border-white/10 hover:border-brand-gold/50 text-center transition-all">
+              <span class="block text-xs font-semibold text-white">微弧流光</span>
+              <span class="text-[10px] text-gray-400 block mt-0.5">極簡雅致</span>
+            </button>
+            <button onclick="switchView('persp', 'images/view_perspective.jpg', '空間入耳 (Acoustic Depth)', '精心計算 15 度入耳傾角，音波直達耳道深處，摩卡蛋白皮耳罩形成自然被動靜謐屏障。')" class="view-btn p-3 rounded-xl bg-white/5 border border-white/10 hover:border-brand-gold/50 text-center transition-all">
+              <span class="block text-xs font-semibold text-white">空間入耳</span>
+              <span class="text-[10px] text-gray-400 block mt-0.5">溫柔貼合</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Craftsmanship Breakdown Info (4 cols) -->
+        <div class="lg:col-span-4 space-y-6">
+          <div class="glass-card p-6 rounded-2xl border border-white/10">
+            <h3 class="text-lg font-bold text-white mb-2 flex items-center gap-2">
+              <i data-lucide="layers" class="w-5 h-5 text-brand-gold"></i>
+              <span id="viewDetailTitle">經典白棕配色哲學</span>
+            </h3>
+            <p class="text-sm text-gray-300 leading-relaxed" id="viewDetailDesc">
+              擺脫傳統耳機單調的純黑或純白，以柔和燕麥白搭配沉穩摩卡暖棕，如同一杯香醇的秋日燕麥拿鐵，既是頂級音響，更是優雅的日常穿搭配件。
+            </p>
+          </div>
+
+          <div class="glass-card p-6 rounded-2xl border border-white/10 space-y-4">
+            <div class="flex items-start gap-4">
+              <div class="w-9 h-9 rounded-lg bg-brand-gold/10 border border-brand-gold/20 flex items-center justify-center shrink-0">
+                <i data-lucide="gem" class="w-4 h-4 text-brand-gold"></i>
+              </div>
+              <div>
+                <h4 class="text-sm font-semibold text-white">溫潤絲滑親膚觸感</h4>
+                <p class="text-xs text-gray-400 mt-1">細緻微磨砂工藝，抗指紋、抗油污，觸碰之際如撫撫溫潤瓷器。</p>
+              </div>
+            </div>
+
+            <div class="flex items-start gap-4">
+              <div class="w-9 h-9 rounded-lg bg-brand-gold/10 border border-brand-gold/20 flex items-center justify-center shrink-0">
+                <i data-lucide="smile" class="w-4 h-4 text-brand-gold"></i>
+              </div>
+              <div>
+                <h4 class="text-sm font-semibold text-white">雲朵般的溫柔包覆</h4>
+                <p class="text-xs text-gray-400 mt-1">慢回彈透氣記憶棉，輕撫耳廓與眼鏡鏡腿，長時間佩戴唯有溫存。</p>
+              </div>
+            </div>
+
+            <div class="flex items-start gap-4">
+              <div class="w-9 h-9 rounded-lg bg-brand-gold/10 border border-brand-gold/20 flex items-center justify-center shrink-0">
+                <i data-lucide="sliders" class="w-4 h-4 text-brand-gold"></i>
+              </div>
+              <div>
+                <h4 class="text-sm font-semibold text-white">精緻無段阻尼金屬滑軌</h4>
+                <p class="text-xs text-gray-400 mt-1">靜謐順暢的推拉手感，適應每一個專屬的頭型弧度。</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== SECTION: CORE HIGHLIGHTS ==================== -->
+  <section id="features" class="py-28 relative">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center max-w-3xl mx-auto mb-20">
+        <p class="text-brand-gold font-semibold tracking-widest text-xs uppercase mb-3">The Symphony of Art & Technology</p>
+        <h2 class="text-3xl sm:text-5xl font-bold text-white tracking-tight">靈魂共鳴 · 讓雜念沉澱於純粹之聲</h2>
+        <p class="mt-4 text-gray-400 text-base leading-relaxed">
+          以深邃聲學為骨，以溫潤調音為魂。在科技與美學的交匯處，重拾音樂最初撫慰人心的力量。
+        </p>
+      </div>
+
+      <!-- Bento Grid Layout -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        
+        <!-- Feature 1: ANC -->
+        <div class="glass-card p-8 rounded-3xl border border-white/10 relative overflow-hidden group hover:border-brand-gold/40 transition-all duration-300">
+          <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-brand-gold/20 to-brand-mocha/30 border border-brand-gold/30 flex items-center justify-center mb-6 text-brand-gold">
+            <i data-lucide="volume-x" class="w-7 h-7"></i>
+          </div>
+          <span class="text-xs font-semibold text-brand-gold uppercase tracking-wider block mb-2">-45dB 智慧混合自適應靜謐</span>
+          <h3 class="text-xl font-bold text-white mb-3">指尖輕撫，萬物喧囂歸於純白</h3>
+          <p class="text-gray-400 text-sm leading-relaxed mb-6">
+            前後雙饋微感知矩陣，在毫秒之間化解世界所有的嘈雜。留下的一席天地，唯有你與音符的耳語。
+          </p>
+          <div class="flex items-center gap-2 text-xs text-gray-300 font-medium pt-4 border-t border-white/10">
+            <i data-lucide="check-circle" class="w-4 h-4 text-brand-gold"></i>
+            <span>靜謐降噪、環境通透、純粹標準三段情境隨心切換</span>
+          </div>
+        </div>
+
+        <!-- Feature 2: Driver & Spatial -->
+        <div class="glass-card p-8 rounded-3xl border border-white/10 relative overflow-hidden group hover:border-brand-gold/40 transition-all duration-300">
+          <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-brand-gold/20 to-brand-mocha/30 border border-brand-gold/30 flex items-center justify-center mb-6 text-brand-gold">
+            <i data-lucide="disc" class="w-7 h-7"></i>
+          </div>
+          <span class="text-xs font-semibold text-brand-gold uppercase tracking-wider block mb-2">40mm 鍍鈹複合發聲單元</span>
+          <h3 class="text-xl font-bold text-white mb-3">如臨現場，聽見呼吸的微光</h3>
+          <p class="text-gray-400 text-sm leading-relaxed mb-6">
+            剛柔並濟的鍍鈹複合振膜，使高音透亮如晨曦、人聲飽滿真切、低音深沉如海潮。配合 360° 空間音訊，重現身處音樂廳第一排的澎湃感動。
+          </p>
+          <div class="flex items-center gap-2 text-xs text-gray-300 font-medium pt-4 border-t border-white/10">
+            <i data-lucide="check-circle" class="w-4 h-4 text-brand-gold"></i>
+            <span>金標 Hi-Res Audio 等級寬頻動態響應</span>
+          </div>
+        </div>
+
+        <!-- Feature 3: Battery & Bluetooth -->
+        <div class="glass-card p-8 rounded-3xl border border-white/10 relative overflow-hidden group hover:border-brand-gold/40 transition-all duration-300">
+          <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-brand-gold/20 to-brand-mocha/30 border border-brand-gold/30 flex items-center justify-center mb-6 text-brand-gold">
+            <i data-lucide="battery" class="w-7 h-7"></i>
+          </div>
+          <span class="text-xs font-semibold text-brand-gold uppercase tracking-wider block mb-2">60h 悠長航程 × 藍牙 5.4</span>
+          <h3 class="text-xl font-bold text-white mb-3">時光不綴，相伴六十個晨昏</h3>
+          <p class="text-gray-400 text-sm leading-relaxed mb-6">
+            新一代低功耗旗艦運算核心，充沛能量悠然長伴。短暫駐足快充 10 分鐘，即刻喚醒 5 個小時的動人旋律。
+          </p>
+          <div class="flex items-center gap-2 text-xs text-gray-300 font-medium pt-4 border-t border-white/10">
+            <i data-lucide="check-circle" class="w-4 h-4 text-brand-gold"></i>
+            <span>支援雙設備無感流轉連線</span>
+          </div>
+        </div>
+
+        <!-- Feature 4: Comfort Fit -->
+        <div class="glass-card p-8 rounded-3xl border border-white/10 relative overflow-hidden group hover:border-brand-gold/40 transition-all duration-300">
+          <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-brand-gold/20 to-brand-mocha/30 border border-brand-gold/30 flex items-center justify-center mb-6 text-brand-gold">
+            <i data-lucide="smile" class="w-7 h-7"></i>
+          </div>
+          <span class="text-xs font-semibold text-brand-gold uppercase tracking-wider block mb-2">雲柔蛋白皮零壓配戴系統</span>
+          <h3 class="text-xl font-bold text-white mb-3">輕羽若無，耳畔的溫柔依託</h3>
+          <p class="text-gray-400 text-sm leading-relaxed mb-6">
+            歷經上千次亞洲人耳廓採樣最佳化，慢回彈透氣海綿如雲朵般包覆，即使眼鏡族長久工作，依然輕盈無拘。
+          </p>
+          <div class="flex items-center gap-2 text-xs text-gray-300 font-medium pt-4 border-t border-white/10">
+            <i data-lucide="check-circle" class="w-4 h-4 text-brand-gold"></i>
+            <span>旋轉摺疊工藝，優雅納入行囊</span>
+          </div>
+        </div>
+
+        <!-- Feature 5: ENC Call Clear -->
+        <div class="glass-card p-8 rounded-3xl border border-white/10 relative overflow-hidden group hover:border-brand-gold/40 transition-all duration-300">
+          <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-brand-gold/20 to-brand-mocha/30 border border-brand-gold/30 flex items-center justify-center mb-6 text-brand-gold">
+            <i data-lucide="mic" class="w-7 h-7"></i>
+          </div>
+          <span class="text-xs font-semibold text-brand-gold uppercase tracking-wider block mb-2">ENC 四麥微陣列人聲提取</span>
+          <h3 class="text-xl font-bold text-white mb-3">風吹不擾，字句溫潤如面</h3>
+          <p class="text-gray-400 text-sm leading-relaxed mb-6">
+            波束成形麥克風精準聚焦人聲，智慧演算分離周遭喧囂與風切聲，讓越洋連線與商務通話皆如耳畔私語。
+          </p>
+          <div class="flex items-center gap-2 text-xs text-gray-300 font-medium pt-4 border-t border-white/10">
+            <i data-lucide="check-circle" class="w-4 h-4 text-brand-gold"></i>
+            <span>獨家防風噪導流結構設計</span>
+          </div>
+        </div>
+
+        <!-- Feature 6: Wired/Wireless Dual Mode -->
+        <div class="glass-card p-8 rounded-3xl border border-white/10 relative overflow-hidden group hover:border-brand-gold/40 transition-all duration-300">
+          <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-brand-gold/20 to-brand-mocha/30 border border-brand-gold/30 flex items-center justify-center mb-6 text-brand-gold">
+            <i data-lucide="cable" class="w-7 h-7"></i>
+          </div>
+          <span class="text-xs font-semibold text-brand-gold uppercase tracking-wider block mb-2">雙模靈動 · 有線與無線自由流轉</span>
+          <h3 class="text-xl font-bold text-white mb-3">隨心切換，自由與純粹兼備</h3>
+          <p class="text-gray-400 text-sm leading-relaxed mb-6">
+            享受藍牙的無拘隨行，亦可隨時插上 3.5mm 高純度無氧銅音源線，瞬間解鎖 24-bit/96kHz 真正無損天籟。
+          </p>
+          <div class="flex items-center gap-2 text-xs text-gray-300 font-medium pt-4 border-t border-white/10">
+            <i data-lucide="check-circle" class="w-4 h-4 text-brand-gold"></i>
+            <span>標配鍍金 3.5mm 發燒級音源連接線</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== SECTION: LIFESTYLE SCENARIOS ==================== -->
+  <section id="lifestyle" class="py-28 relative bg-gradient-to-b from-brand-darkBg via-brand-darkSurface to-brand-darkBg border-t border-white/5">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center max-w-3xl mx-auto mb-20">
+        <p class="text-brand-gold font-semibold tracking-widest text-xs uppercase mb-3">Everyday Aesthetic Harmony</p>
+        <h2 class="text-3xl sm:text-5xl font-bold text-white tracking-tight">日常即詩 · 每一刻都有它的旋律</h2>
+        <p class="mt-4 text-gray-400 text-base leading-relaxed">
+          無論是在日光熹微的轉角咖啡館，或是穿越暮色長空的差旅高鐵，SERENE Horizon 都能以優雅身姿，陪伴你靜享每刻時光。
+        </p>
+      </div>
+
+      <!-- Lifestyle Card 1: Cafe -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center mb-20">
+        <div class="lg:col-span-7 rounded-3xl overflow-hidden glass-card p-3 border border-white/10 group">
+          <div class="rounded-2xl overflow-hidden aspect-[4/3] bg-black/40">
+            <img src="images/lifestyle_cafe.jpg" alt="咖啡廳專注工作情境" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+          </div>
+        </div>
+        <div class="lg:col-span-5 space-y-6">
+          <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-brand-gold/10 border border-brand-gold/30 text-brand-goldLight text-xs font-semibold">
+            <i data-lucide="coffee" class="w-3.5 h-3.5"></i>
+            <span>靜謐心流 · 午後的一杯咖啡與光</span>
+          </div>
+          <h3 class="text-3xl font-bold text-white leading-snug">
+            在咖啡香與敲鍵聲中，<br><span class="text-gold-gradient">留給自己一座專屬島嶼</span>
+          </h3>
+          <p class="text-gray-300 text-sm leading-relaxed">
+            暖陽傾瀉的木質桌前，開啟通透模式，輕聲與店員點上一杯溫熱拿鐵；隨後輕撫耳罩切換為降噪模式，周遭低語聲悄然隱退，靈感在溫潤樂聲中自然流淌。
+          </p>
+          <div class="space-y-3 pt-2">
+            <div class="flex items-center gap-3 text-sm text-gray-300">
+              <i data-lucide="check" class="w-4 h-4 text-brand-gold"></i>
+              <span>低調雅致白棕配色，與大地色、燕麥色日常穿搭完美輝映</span>
+            </div>
+            <div class="flex items-center gap-3 text-sm text-gray-300">
+              <i data-lucide="check" class="w-4 h-4 text-brand-gold"></i>
+              <span>連續沉浸數小時，依然輕盈透氣、不壓髮型</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Lifestyle Card 2: Commute -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+        <div class="lg:col-span-5 space-y-6 order-2 lg:order-1">
+          <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-brand-gold/10 border border-brand-gold/30 text-brand-goldLight text-xs font-semibold">
+            <i data-lucide="train" class="w-3.5 h-3.5"></i>
+            <span>暮色行止 · 飛馳列車裡的私人音樂廳</span>
+          </div>
+          <h3 class="text-3xl font-bold text-white leading-snug">
+            窗外是奔馳的晚霞車流，<br><span class="text-gold-gradient">耳畔是一整座無人交響廳</span>
+          </h3>
+          <p class="text-gray-300 text-sm leading-relaxed">
+            飛馳高鐵與都會通勤的暮色裡，-45dB 深度降噪濾除軌道轟鳴與引擎雜訊。闔上雙眸，360° 空間音訊將你包覆其中，讓每一次奔波都昇華為心靈的漫步。
+          </p>
+          <div class="space-y-3 pt-2">
+            <div class="flex items-center gap-3 text-sm text-gray-300">
+              <i data-lucide="check" class="w-4 h-4 text-brand-gold"></i>
+              <span>智慧環境動態感知，行車廣播重要提示音不漏聽</span>
+            </div>
+            <div class="flex items-center gap-3 text-sm text-gray-300">
+              <i data-lucide="check" class="w-4 h-4 text-brand-gold"></i>
+              <span>旗艦雙設備無縫切換，工作筆電與隨身手機從容兼顧</span>
+            </div>
+          </div>
+        </div>
+        <div class="lg:col-span-7 rounded-3xl overflow-hidden glass-card p-3 border border-white/10 group order-1 lg:order-2">
+          <div class="rounded-2xl overflow-hidden aspect-[4/3] bg-black/40">
+            <img src="images/lifestyle_commute.jpg" alt="高鐵長途差旅降噪情境" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ==================== SECTION: ACOUSTIC ARCHITECTURE ==================== -->
+  <section id="acoustics" class="py-28 relative bg-brand-darkSurface/50 border-t border-b border-white/5">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center max-w-3xl mx-auto mb-16">
+        <p class="text-brand-gold font-semibold tracking-widest text-xs uppercase mb-3">Pure Acoustic Architecture</p>
+        <h2 class="text-3xl sm:text-5xl font-bold text-white tracking-tight">深邃聲學構形 · 重拾音樂的生命溫度</h2>
+        <p class="mt-4 text-gray-400 text-base leading-relaxed">
+          不惜代價淬鍊鍍鈹複合振膜與獨立共鳴腔體，只為還原創作者在樂譜之間傾注的所有情感。
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div class="glass-card p-8 rounded-2xl border border-white/10 text-center">
+          <div class="text-4xl font-extrabold text-brand-gold mb-2">40mm</div>
+          <h4 class="text-lg font-bold text-white mb-2">鍍鈹複合發聲單元</h4>
+          <p class="text-xs text-gray-400 leading-relaxed">
+            極致剛性與輕盈平衡，瞬態響應敏捷俐落，有效化解大動態失真，重現鼓點彈性與溫潤人聲。
+          </p>
+        </div>
+
+        <div class="glass-card p-8 rounded-2xl border border-white/10 text-center">
+          <div class="text-4xl font-extrabold text-brand-gold mb-2">20-40k<span class="text-xl">Hz</span></div>
+          <h4 class="text-lg font-bold text-white mb-2">寬廣頻率響應範圍</h4>
+          <p class="text-xs text-gray-400 leading-relaxed">
+            超乎想像的頻寬維度，從幽微的小提琴泛音到澎湃深邃的低頻氛圍，鉅細靡遺如實呈現。
+          </p>
+        </div>
+
+        <div class="glass-card p-8 rounded-2xl border border-white/10 text-center">
+          <div class="text-4xl font-extrabold text-brand-gold mb-2">&lt; 0.3%</div>
+          <h4 class="text-lg font-bold text-white mb-2">總諧波失真 (THD)</h4>
+          <p class="text-xs text-gray-400 leading-relaxed">
+            旗艦級低失真聲學控制，忠實還原錄音室原始混音靈魂，不染一絲人工粉飾。
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== SECTION: EDITION COMPARISON ==================== -->
+  <section id="comparison" class="py-28 relative">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center max-w-3xl mx-auto mb-20">
+        <p class="text-brand-gold font-semibold tracking-widest text-xs uppercase mb-3">Two Melodic Preludes</p>
+        <h2 class="text-3xl sm:text-5xl font-bold text-white tracking-tight">二重序曲 · 擇定屬於您的理想音色</h2>
+        <p class="mt-4 text-gray-400 text-base leading-relaxed">
+          為純粹日常而生的「一般版」，與為極致寂靜差旅打造的「高階降噪版」，皆以相同工藝初心為您呈現。
+        </p>
+      </div>
+
+      <!-- Pricing Cards -->
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-5xl mx-auto items-stretch">
+        
+        <!-- Standard Edition (NT$ 3,999) -->
+        <div class="glass-card rounded-3xl p-8 sm:p-10 border border-white/10 flex flex-col justify-between relative hover:border-white/20 transition-all">
+          <div>
+            <div class="inline-block px-3 py-1 rounded-full bg-white/10 text-gray-300 text-xs font-semibold mb-4">
+              日常純粹首選 · 輕盈隨行
+            </div>
+            <h3 class="text-2xl font-bold text-white mb-2">一般版 (Standard Edition)</h3>
+            <p class="text-gray-400 text-sm mb-6">輕巧無拘，適合居家放鬆、閱讀書寫與日常休閒聆聽。</p>
+
+            <div class="flex items-baseline gap-2 mb-8 pb-6 border-b border-white/10">
+              <span class="text-4xl sm:text-5xl font-extrabold text-white">NT$ 3,999</span>
+              <span class="text-xs text-gray-400">含稅免運 · 台灣現貨直送</span>
+            </div>
+
+            <!-- Features List -->
+            <ul class="space-y-4 text-sm text-gray-300 mb-8">
+              <li class="flex items-center gap-3">
+                <i data-lucide="check" class="w-4 h-4 text-gray-400"></i>
+                <span>經典燕麥白 × 摩卡棕高級撞色工藝外觀</span>
+              </li>
+              <li class="flex items-center gap-3">
+                <i data-lucide="check" class="w-4 h-4 text-gray-400"></i>
+                <span>40mm 複合高傳真發聲單體</span>
+              </li>
+              <li class="flex items-center gap-3">
+                <i data-lucide="check" class="w-4 h-4 text-gray-400"></i>
+                <span>升級藍牙 5.4 旗艦晶片（極低延遲、省電）</span>
+              </li>
+              <li class="flex items-center gap-3">
+                <i data-lucide="check" class="w-4 h-4 text-gray-400"></i>
+                <span>ENC 雙麥通話清晰降噪</span>
+              </li>
+              <li class="flex items-center gap-3">
+                <i data-lucide="check" class="w-4 h-4 text-gray-400"></i>
+                <span>40 小時連續悠揚播放續航</span>
+              </li>
+              <li class="flex items-center gap-3">
+                <i data-lucide="check" class="w-4 h-4 text-gray-400"></i>
+                <span>雲柔蛋白皮零壓感耳罩＋人體工學柔韌頭弓</span>
+              </li>
+              <li class="flex items-center gap-3">
+                <i data-lucide="check" class="w-4 h-4 text-gray-400"></i>
+                <span>隨盒附贈編織 Type-C 充電線、3.5mm 音源線</span>
+              </li>
+              <li class="flex items-center gap-3 text-gray-500 line-through">
+                <i data-lucide="x" class="w-4 h-4 text-gray-600"></i>
+                <span>-45dB 智慧自適應主動降噪 (ANC)</span>
+              </li>
+              <li class="flex items-center gap-3 text-gray-500 line-through">
+                <i data-lucide="x" class="w-4 h-4 text-gray-600"></i>
+                <span>360° 全景空間沉浸聲學</span>
+              </li>
+            </ul>
+          </div>
+
+          <a href="#order" onclick="selectTier('standard')" class="w-full py-4 rounded-xl border border-white/20 hover:border-brand-gold bg-white/5 hover:bg-white/10 text-white font-semibold text-center text-sm transition-all block">
+            選購日常純粹版 (NT$ 3,999)
+          </a>
+        </div>
+
+        <!-- Pro ANC Edition (NT$ 5,999) -->
+        <div class="glass-card rounded-3xl p-8 sm:p-10 border-2 border-brand-gold relative flex flex-col justify-between glow-gold bg-gradient-to-b from-[#1C1A17] to-brand-darkCard">
+          <!-- Hot Badge -->
+          <div class="absolute -top-4 right-8 px-4 py-1.5 rounded-full bg-gradient-to-r from-brand-gold to-brand-goldLight text-brand-darkBg text-xs font-extrabold tracking-wider uppercase shadow-md">
+            ★ 88% 愛樂者首選 · 殿堂級沉浸體驗
+          </div>
+
+          <div>
+            <div class="inline-block px-3 py-1 rounded-full bg-brand-gold/20 text-brand-goldLight text-xs font-semibold mb-4 border border-brand-gold/30">
+              極致寂靜與商務旗艦 · 殿堂聲學
+            </div>
+            <h3 class="text-2xl font-bold text-white mb-2">高階降噪版 (Pro ANC Edition)</h3>
+            <p class="text-gray-300 text-sm mb-6">全功能旗艦，專為長途差旅、高強度專注辦公與發燒愛樂者量身打造。</p>
+
+            <div class="flex items-baseline gap-2 mb-8 pb-6 border-b border-brand-gold/20">
+              <span class="text-4xl sm:text-5xl font-extrabold text-brand-goldLight">NT$ 5,999</span>
+              <span class="text-xs text-brand-gold">含稅免運 · 附贈原廠極簡防震旅行收納硬包</span>
+            </div>
+
+            <!-- Features List -->
+            <ul class="space-y-4 text-sm text-gray-200 mb-8">
+              <li class="flex items-center gap-3">
+                <i data-lucide="check-circle-2" class="w-4 h-4 text-brand-gold"></i>
+                <span class="font-medium text-white">涵蓋一般版全部核心硬體與經典白棕外觀</span>
+              </li>
+              <li class="flex items-center gap-3">
+                <i data-lucide="check-circle-2" class="w-4 h-4 text-brand-gold"></i>
+                <span class="font-bold text-brand-goldLight">-45dB 智慧混合自適應主動降噪 (ANC)</span>
+              </li>
+              <li class="flex items-center gap-3">
+                <i data-lucide="check-circle-2" class="w-4 h-4 text-brand-gold"></i>
+                <span class="font-medium text-white">360° 全景空間立體音效 (Spatial Audio)</span>
+              </li>
+              <li class="flex items-center gap-3">
+                <i data-lucide="check-circle-2" class="w-4 h-4 text-brand-gold"></i>
+                <span class="font-medium text-white">4 麥克風 ENC 波束成型抗風噪清晰通話</span>
+              </li>
+              <li class="flex items-center gap-3">
+                <i data-lucide="check-circle-2" class="w-4 h-4 text-brand-gold"></i>
+                <span class="font-medium text-white">旗艦級 60 小時音樂航程（開啟降噪 40 小時）</span>
+              </li>
+              <li class="flex items-center gap-3">
+                <i data-lucide="check-circle-2" class="w-4 h-4 text-brand-gold"></i>
+                <span class="font-medium text-white">支援專屬客製化 EQ 調音 App</span>
+              </li>
+              <li class="flex items-center gap-3">
+                <i data-lucide="check-circle-2" class="w-4 h-4 text-brand-gold"></i>
+                <span class="font-medium text-white">專屬禮遇：附贈原廠極簡防震旅行收納硬包</span>
+              </li>
+              <li class="flex items-center gap-3">
+                <i data-lucide="check-circle-2" class="w-4 h-4 text-brand-gold"></i>
+                <span class="font-medium text-white">極速充電：充電 10 分鐘暢享 5 小時旋律</span>
+              </li>
+            </ul>
+          </div>
+
+          <a href="#order" onclick="selectTier('pro')" class="w-full py-4 rounded-xl bg-gradient-to-r from-brand-goldLight via-brand-gold to-brand-goldDark text-brand-darkBg font-bold text-center text-sm shadow-[0_10px_25px_rgba(212,175,55,0.3)] hover:scale-[1.02] active:scale-95 transition-all block">
+            選購高階降噪版 (NT$ 5,999)
+          </a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== SECTION: USER REVIEWS ==================== -->
+  <section id="reviews" class="py-28 relative bg-brand-darkSurface/40 border-t border-b border-white/5">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center max-w-3xl mx-auto mb-16">
+        <p class="text-brand-gold font-semibold tracking-widest text-xs uppercase mb-3">Verified Buyer Testimonials</p>
+        <h2 class="text-3xl sm:text-5xl font-bold text-white tracking-tight">真實使用者回饋 · 4.9 分極致信賴</h2>
+        <div class="flex items-center justify-center gap-2 mt-4 text-brand-gold">
+          <div class="flex text-brand-gold">
+            <i data-lucide="star" class="w-5 h-5 fill-brand-gold"></i>
+            <i data-lucide="star" class="w-5 h-5 fill-brand-gold"></i>
+            <i data-lucide="star" class="w-5 h-5 fill-brand-gold"></i>
+            <i data-lucide="star" class="w-5 h-5 fill-brand-gold"></i>
+            <i data-lucide="star" class="w-5 h-5 fill-brand-gold"></i>
+          </div>
+          <span class="text-white font-bold text-lg ml-2">4.9 / 5.0</span>
+          <span class="text-gray-400 text-xs">（累積 2,860+ 則好評反饋）</span>
+        </div>
+      </div>
+
+      <!-- Testimonial Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        
+        <!-- Review 1 -->
+        <div class="glass-card p-6 rounded-2xl border border-white/10 flex flex-col justify-between">
+          <div>
+            <div class="flex text-brand-gold mb-3">
+              <i data-lucide="star" class="w-4 h-4 fill-brand-gold"></i>
+              <i data-lucide="star" class="w-4 h-4 fill-brand-gold"></i>
+              <i data-lucide="star" class="w-4 h-4 fill-brand-gold"></i>
+              <i data-lucide="star" class="w-4 h-4 fill-brand-gold"></i>
+              <i data-lucide="star" class="w-4 h-4 fill-brand-gold"></i>
+            </div>
+            <p class="text-sm text-gray-300 leading-relaxed mb-4">
+              「實品的白棕配色美到令人屏息！不是那種刺眼的塑料死白，而是溫潤的燕麥米色。每天在設計工作室戴著剪片 6 小時完全不夾頭，蛋白皮耳罩軟得像棉花糖！」
+            </p>
+          </div>
+          <div class="flex items-center gap-3 pt-4 border-t border-white/10">
+            <div class="w-10 h-10 rounded-full bg-gradient-to-tr from-brand-mocha to-brand-gold/60 flex items-center justify-center text-white font-bold text-sm">
+              林
+            </div>
+            <div>
+              <div class="text-white font-semibold text-sm">林小姐 · 產品設計總監</div>
+              <div class="text-[11px] text-brand-gold">購買：尊榮旗艦版 (Pro ANC)</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Review 2 -->
+        <div class="glass-card p-6 rounded-2xl border border-white/10 flex flex-col justify-between">
+          <div>
+            <div class="flex text-brand-gold mb-3">
+              <i data-lucide="star" class="w-4 h-4 fill-brand-gold"></i>
+              <i data-lucide="star" class="w-4 h-4 fill-brand-gold"></i>
+              <i data-lucide="star" class="w-4 h-4 fill-brand-gold"></i>
+              <i data-lucide="star" class="w-4 h-4 fill-brand-gold"></i>
+              <i data-lucide="star" class="w-4 h-4 fill-brand-gold"></i>
+            </div>
+            <p class="text-sm text-gray-300 leading-relaxed mb-4">
+              「常態台北台中搭高鐵開遠端會議，以前都要把音量開很大聲傷耳朵。戴上這支開啟降噪，車廂軌道轟鳴聲一秒消失！通話麥克風抗風噪表現令人驚艷。」
+            </p>
+          </div>
+          <div class="flex items-center gap-3 pt-4 border-t border-white/10">
+            <div class="w-10 h-10 rounded-full bg-gradient-to-tr from-brand-mocha to-brand-gold/60 flex items-center justify-center text-white font-bold text-sm">
+              陳
+            </div>
+            <div>
+              <div class="text-white font-semibold text-sm">陳副總 · 外商金融管理</div>
+              <div class="text-[11px] text-brand-gold">購買：尊榮旗艦版 (Pro ANC)</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Review 3 -->
+        <div class="glass-card p-6 rounded-2xl border border-white/10 flex flex-col justify-between">
+          <div>
+            <div class="flex text-brand-gold mb-3">
+              <i data-lucide="star" class="w-4 h-4 fill-brand-gold"></i>
+              <i data-lucide="star" class="w-4 h-4 fill-brand-gold"></i>
+              <i data-lucide="star" class="w-4 h-4 fill-brand-gold"></i>
+              <i data-lucide="star" class="w-4 h-4 fill-brand-gold"></i>
+              <i data-lucide="star" class="w-4 h-4 fill-brand-gold"></i>
+            </div>
+            <p class="text-sm text-gray-300 leading-relaxed mb-4">
+              「原本還在猶豫三千多的一般版，買來後發現音質超水準！40mm 單體低頻很有彈性，人聲乾淨溫暖。而且電池超耐用，充一次電可以用快兩個禮拜，超級推！」
+            </p>
+          </div>
+          <div class="flex items-center gap-3 pt-4 border-t border-white/10">
+            <div class="w-10 h-10 rounded-full bg-gradient-to-tr from-brand-mocha to-brand-gold/60 flex items-center justify-center text-white font-bold text-sm">
+              張
+            </div>
+            <div>
+              <div class="text-white font-semibold text-sm">張同學 · 醫學院研究生</div>
+              <div class="text-[11px] text-gray-400">購買：日常純粹版 (Standard)</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Review 4 -->
+        <div class="glass-card p-6 rounded-2xl border border-white/10 flex flex-col justify-between">
+          <div>
+            <div class="flex text-brand-gold mb-3">
+              <i data-lucide="star" class="w-4 h-4 fill-brand-gold"></i>
+              <i data-lucide="star" class="w-4 h-4 fill-brand-gold"></i>
+              <i data-lucide="star" class="w-4 h-4 fill-brand-gold"></i>
+              <i data-lucide="star" class="w-4 h-4 fill-brand-gold"></i>
+              <i data-lucide="star" class="w-4 h-4 fill-brand-gold"></i>
+            </div>
+            <p class="text-sm text-gray-300 leading-relaxed mb-4">
+              「身為獨立樂評人，這支耳機的調音讓我很驚訝。沒有廉價耳機過度轟頭的低音，樂器分離度極高，空間聲學開啟後樂隊的結像定位很清楚，六千元價位帶無敵手。」
+            </p>
+          </div>
+          <div class="flex items-center gap-3 pt-4 border-t border-white/10">
+            <div class="w-10 h-10 rounded-full bg-gradient-to-tr from-brand-mocha to-brand-gold/60 flex items-center justify-center text-white font-bold text-sm">
+              艾
+            </div>
+            <div>
+              <div class="text-white font-semibold text-sm">艾倫 · 獨立音樂製作人</div>
+              <div class="text-[11px] text-brand-gold">購買：尊榮旗艦版 (Pro ANC)</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== SECTION: ORDER & CHECKOUT ==================== -->
+  <section id="order" class="py-28 relative">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <!-- Section Title -->
+      <div class="text-center max-w-3xl mx-auto mb-16">
+        <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-brand-gold/30 bg-brand-gold/10 text-brand-gold text-xs font-semibold tracking-wider uppercase mb-3">
+          <i data-lucide="shield-check" class="w-3.5 h-3.5"></i>
+          <span>官方直營 · 原廠正品安心保障</span>
+        </div>
+        <h2 class="text-3xl sm:text-5xl font-bold text-white tracking-tight">典藏入席 · 開啟屬於您的靜謐旅程</h2>
+        <p class="mt-4 text-gray-400 text-sm leading-relaxed">
+          全台免運快速出貨，享有完整 1 年原廠保固與 7 天鑑賞期免費試聽退換服務。
+        </p>
+      </div>
+
+      <!-- Trust Badges -->
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12">
+        <div class="p-4 rounded-xl glass-card border border-white/10 text-center">
+          <i data-lucide="truck" class="w-5 h-5 text-brand-gold mx-auto mb-2"></i>
+          <div class="text-xs font-bold text-white">台灣現貨 24h 出貨</div>
+          <div class="text-[10px] text-gray-400">全台本島黑貓免運直送</div>
+        </div>
+        <div class="p-4 rounded-xl glass-card border border-white/10 text-center">
+          <i data-lucide="award" class="w-5 h-5 text-brand-gold mx-auto mb-2"></i>
+          <div class="text-xs font-bold text-white">1 年原廠保固</div>
+          <div class="text-[10px] text-gray-400">在地售後快速換新</div>
+        </div>
+        <div class="p-4 rounded-xl glass-card border border-white/10 text-center">
+          <i data-lucide="refresh-cw" class="w-5 h-5 text-brand-gold mx-auto mb-2"></i>
+          <div class="text-xs font-bold text-white">7 天鑑賞試聽</div>
+          <div class="text-[10px] text-gray-400">不滿意無條件全額退費</div>
+        </div>
+        <div class="p-4 rounded-xl glass-card border border-white/10 text-center">
+          <i data-lucide="lock" class="w-5 h-5 text-brand-gold mx-auto mb-2"></i>
+          <div class="text-xs font-bold text-white">256-Bit SSL 加密</div>
+          <div class="text-[10px] text-gray-400">信用卡刷卡安全保障</div>
+        </div>
+      </div>
+
+      <!-- Interactive Checkout Card -->
+      <div class="glass-card rounded-3xl p-6 sm:p-10 border border-white/10 glow-soft">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-10">
+          
+          <!-- Left: SKU & Configuration (5 cols) -->
+          <div class="lg:col-span-5 space-y-6">
+            <h3 class="text-lg font-bold text-white flex items-center gap-2">
+              <i data-lucide="shopping-bag" class="w-5 h-5 text-brand-gold"></i>
+              <span>選擇您的專屬配置</span>
+            </h3>
+
+            <!-- Version Selector Radio Boxes -->
+            <div class="space-y-3">
+              <!-- Option Standard -->
+              <label class="block p-4 rounded-2xl border cursor-pointer transition-all border-white/10 bg-white/5 hover:border-brand-gold/40" id="tierCard-standard" onclick="updateSelection('standard', 3999)">
+                <div class="flex items-center justify-between">
+                  <div class="flex items-center gap-3">
+                    <input type="radio" name="edition" value="standard" class="accent-brand-gold w-4 h-4">
+                    <div>
+                      <div class="text-sm font-bold text-white">日常純粹 · 一般版 (Standard)</div>
+                      <div class="text-xs text-gray-400">40mm 發聲單體 · 藍牙 5.4 · 40h 悠揚續航</div>
+                    </div>
+                  </div>
+                  <div class="text-base font-bold text-white">NT$ 3,999</div>
+                </div>
+              </label>
+
+              <!-- Option Pro ANC -->
+              <label class="block p-4 rounded-2xl border cursor-pointer transition-all border-brand-gold bg-brand-gold/10 glow-gold" id="tierCard-pro" onclick="updateSelection('pro', 5999)">
+                <div class="flex items-center justify-between">
+                  <div class="flex items-center gap-3">
+                    <input type="radio" name="edition" value="pro" checked class="accent-brand-gold w-4 h-4">
+                    <div>
+                      <div class="flex items-center gap-2">
+                        <span class="text-sm font-bold text-brand-goldLight">尊榮旗艦 · 高階降噪版 (Pro ANC)</span>
+                        <span class="px-2 py-0.5 text-[10px] bg-brand-gold text-black font-extrabold rounded">熱銷首選</span>
+                      </div>
+                      <div class="text-xs text-gray-300">-45dB 降噪 · 空間音效 · 60h 航程 · 附旅行硬包</div>
+                    </div>
+                  </div>
+                  <div class="text-base font-bold text-brand-goldLight">NT$ 5,999</div>
+                </div>
+              </label>
+            </div>
+
+            <!-- Color Palette Display -->
+            <div class="p-4 rounded-xl bg-black/40 border border-white/10 space-y-2">
+              <div class="text-xs font-semibold text-gray-300 flex items-center justify-between">
+                <span>外觀配色：</span>
+                <span class="text-brand-gold font-bold">燕麥白 × 摩卡暖棕 (White & Mocha)</span>
+              </div>
+              <div class="flex items-center gap-2">
+                <span class="w-6 h-6 rounded-full bg-[#EFECE6] border border-white/40 shadow-inner"></span>
+                <span class="w-6 h-6 rounded-full bg-[#624738] border border-white/20 shadow-inner"></span>
+                <span class="text-xs text-gray-400 ml-2">原廠唯一經典撞色，全系列現貨供應</span>
+              </div>
+            </div>
+
+            <!-- Quantity Selector -->
+            <div class="flex items-center justify-between p-4 rounded-xl bg-white/5 border border-white/10">
+              <span class="text-sm text-gray-300 font-medium">訂購數量：</span>
+              <div class="flex items-center gap-3">
+                <button type="button" onclick="changeQty(-1)" class="w-8 h-8 rounded-lg bg-white/10 hover:bg-white/20 flex items-center justify-center text-white font-bold transition-all">-</button>
+                <span id="orderQty" class="text-base font-bold text-white w-6 text-center">1</span>
+                <button type="button" onclick="changeQty(1)" class="w-8 h-8 rounded-lg bg-white/10 hover:bg-white/20 flex items-center justify-center text-white font-bold transition-all">+</button>
+              </div>
+            </div>
+
+            <!-- Price Summary Box -->
+            <div class="p-4 rounded-2xl bg-black/60 border border-white/10 space-y-2">
+              <div class="flex justify-between text-xs text-gray-400">
+                <span>小計</span>
+                <span id="subtotalDisplay">NT$ 5,999</span>
+              </div>
+              <div class="flex justify-between text-xs text-brand-gold">
+                <span>運費</span>
+                <span>全館免運（NT$ 0）</span>
+              </div>
+              <div class="flex justify-between text-sm font-bold text-white pt-2 border-t border-white/10">
+                <span>應付總額</span>
+                <span class="text-xl text-brand-gold" id="totalDisplay">NT$ 5,999</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right: Customer Checkout Info (7 cols) -->
+          <div class="lg:col-span-7">
+            <h3 class="text-lg font-bold text-white mb-6 flex items-center gap-2">
+              <i data-lucide="clipboard-list" class="w-5 h-5 text-brand-gold"></i>
+              <span>填寫收件與付款資訊</span>
+            </h3>
+
+            <form id="orderForm" onsubmit="handleOrderSubmit(event)" class="space-y-4">
+              <!-- Name & Phone -->
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <label class="block text-xs font-medium text-gray-300 mb-1.5">收件人姓名 <span class="text-red-400">*</span></label>
+                  <input type="text" required placeholder="例如：王小明" class="w-full px-4 py-3 rounded-xl bg-black/40 border border-white/15 focus:border-brand-gold focus:outline-none text-white text-sm">
+                </div>
+                <div>
+                  <label class="block text-xs font-medium text-gray-300 mb-1.5">聯絡電話 <span class="text-red-400">*</span></label>
+                  <input type="tel" required placeholder="例如：0912-345-678" class="w-full px-4 py-3 rounded-xl bg-black/40 border border-white/15 focus:border-brand-gold focus:outline-none text-white text-sm">
+                </div>
+              </div>
+
+              <!-- Email -->
+              <div>
+                <label class="block text-xs font-medium text-gray-300 mb-1.5">電子信箱 (發送訂單與出貨通知) <span class="text-red-400">*</span></label>
+                <input type="email" required placeholder="your.name@example.com" class="w-full px-4 py-3 rounded-xl bg-black/40 border border-white/15 focus:border-brand-gold focus:outline-none text-white text-sm">
+              </div>
+
+              <!-- Address -->
+              <div>
+                <label class="block text-xs font-medium text-gray-300 mb-1.5">收件地址 <span class="text-red-400">*</span></label>
+                <input type="text" required placeholder="縣市、區域、路段與門牌樓層" class="w-full px-4 py-3 rounded-xl bg-black/40 border border-white/15 focus:border-brand-gold focus:outline-none text-white text-sm">
+              </div>
+
+              <!-- Payment Method (Credit Card Link) -->
+              <div>
+                <div class="flex items-center justify-between mb-2">
+                  <label class="block text-xs font-medium text-gray-300">付款方式 <span class="text-red-400">*</span></label>
+                  <span class="text-[11px] text-brand-gold font-medium flex items-center gap-1">
+                    <i data-lucide="shield-check" class="w-3.5 h-3.5"></i> 銀行 SSL 安全加密刷卡
+                  </span>
+                </div>
+
+                <!-- Credit Card Redirect Box -->
+                <div class="p-4 rounded-2xl border border-brand-gold bg-brand-gold/10 space-y-3">
+                  <div class="flex items-center justify-between">
+                    <div class="flex items-center gap-2.5">
+                      <input type="radio" name="payment" value="credit" checked class="accent-brand-gold w-4 h-4">
+                      <span class="text-sm font-bold text-white">信用卡線上刷卡（一次付清）</span>
+                    </div>
+                    <div class="flex items-center gap-1.5 text-xs text-gray-300 font-semibold tracking-wider">
+                      <span class="px-2 py-0.5 rounded bg-black/60 border border-white/10 text-[10px]">VISA</span>
+                      <span class="px-2 py-0.5 rounded bg-black/60 border border-white/10 text-[10px]">Mastercard</span>
+                      <span class="px-2 py-0.5 rounded bg-black/60 border border-white/10 text-[10px]">JCB</span>
+                    </div>
+                  </div>
+
+                  <p class="text-xs text-gray-300 leading-relaxed pt-2 border-t border-white/10">
+                    本站採用銀行第三方金流安全連線，送出訂單後將跳轉至專屬刷卡頁面完成交易。
+                  </p>
+
+                  <!-- 專用外部刷卡金流網址 (可隨時替換下方 href 或在腳本中修改) -->
+                  <div class="pt-1">
+                    <a id="externalPaymentLink" href="https://payment.example.com/checkout" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 text-xs text-brand-gold hover:text-brand-goldLight underline font-mono break-all">
+                      <i data-lucide="external-link" class="w-3.5 h-3.5 shrink-0"></i>
+                      <span>刷卡金流跳轉網址：https://payment.example.com/checkout</span>
+                    </a>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Invoice Option -->
+              <div>
+                <label class="block text-xs font-medium text-gray-300 mb-1.5">發票類型</label>
+                <select class="w-full px-4 py-3 rounded-xl bg-black/40 border border-white/15 focus:border-brand-gold focus:outline-none text-white text-sm">
+                  <option value="cloud">個人雲端發票（中獎自動 Email 通知）</option>
+                  <option value="company">公司行號統一編號三聯式發票</option>
+                  <option value="carrier">手機條碼載具</option>
+                </select>
+              </div>
+
+              <!-- Order Submit Button -->
+              <button type="submit" class="w-full py-4 mt-6 rounded-2xl bg-gradient-to-r from-brand-goldLight via-brand-gold to-brand-goldDark text-brand-darkBg font-extrabold text-base tracking-wide shadow-[0_10px_30px_rgba(212,175,55,0.35)] hover:shadow-[0_15px_45px_rgba(212,175,55,0.5)] hover:scale-[1.01] active:scale-98 transition-all flex items-center justify-center gap-2">
+                <i data-lucide="credit-card" class="w-5 h-5"></i>
+                <span id="submitBtnText">前往信用卡安全刷卡 · NT$ 5,999 (全台免運)</span>
+              </button>
+
+              <p class="text-[11px] text-gray-500 text-center">
+                點擊送出即代表您同意本站之隱私權保護政策與服務條款。享 7 天鑑賞期無條件退換保障。
+              </p>
+            </form>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== SECTION: FAQ ==================== -->
+  <section id="faq" class="py-24 relative bg-brand-darkSurface/60 border-t border-white/5">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center max-w-2xl mx-auto mb-16">
+        <p class="text-brand-gold font-semibold tracking-widest text-xs uppercase mb-3">Questions & Answers</p>
+        <h2 class="text-3xl font-bold text-white tracking-tight">常見問題與購買須知</h2>
+      </div>
+
+      <div class="space-y-4">
+        <!-- FAQ 1 -->
+        <div class="glass-card rounded-2xl border border-white/10 p-5">
+          <h4 class="text-base font-bold text-white mb-2 flex items-center gap-2">
+            <i data-lucide="help-circle" class="w-4 h-4 text-brand-gold shrink-0"></i>
+            <span>戴眼鏡佩戴這款耳機會感到壓迫或疼痛嗎？</span>
+          </h4>
+          <p class="text-sm text-gray-400 pl-6 leading-relaxed">
+            完全不會。SERENE Horizon 耳罩選用頂級慢回彈雲柔蛋白皮，內部填充高密度透氣記憶海綿，能隨鏡腿形狀溫和包覆順應，長時間配戴眼鏡閱讀工作依然輕盈零壓感。
+          </p>
+        </div>
+
+        <!-- FAQ 2 -->
+        <div class="glass-card rounded-2xl border border-white/10 p-5">
+          <h4 class="text-base font-bold text-white mb-2 flex items-center gap-2">
+            <i data-lucide="help-circle" class="w-4 h-4 text-brand-gold shrink-0"></i>
+            <span>可以同時連接電腦與手機兩台設備嗎？</span>
+          </h4>
+          <p class="text-sm text-gray-400 pl-6 leading-relaxed">
+            可以。搭載最新藍牙 5.4 旗艦晶片，支援雙設備同時待機。當您在筆電觀賞影片或聽音樂時，若手機有來電，耳機會自動無縫切換至手機通話，通話結束後自動切回，無需手動重新配對。
+          </p>
+        </div>
+
+        <!-- FAQ 3 -->
+        <div class="glass-card rounded-2xl border border-white/10 p-5">
+          <h4 class="text-base font-bold text-white mb-2 flex items-center gap-2">
+            <i data-lucide="help-circle" class="w-4 h-4 text-brand-gold shrink-0"></i>
+            <span>7 天試聽鑑賞期如何計算？退換貨需要手續費嗎？</span>
+          </h4>
+          <p class="text-sm text-gray-400 pl-6 leading-relaxed">
+            自收到商品翌日起算享完整 7 天猶豫鑑賞期。只要保持產品外觀、包裝配件完整無破損，若有任何不滿意皆可直接聯繫官方客服申請退款，並由我們派黑貓宅急便免費到府收回，您無需負擔任何運費或手續費。
+          </p>
+        </div>
+
+        <!-- FAQ 4 -->
+        <div class="glass-card rounded-2xl border border-white/10 p-5">
+          <h4 class="text-base font-bold text-white mb-2 flex items-center gap-2">
+            <i data-lucide="help-circle" class="w-4 h-4 text-brand-gold shrink-0"></i>
+            <span>高階降噪版與一般版的主要差別是什麼？</span>
+          </h4>
+          <p class="text-sm text-gray-400 pl-6 leading-relaxed">
+            高階降噪版多了 -45dB 智慧混合雙饋主動降噪（ANC）、360° 空間立體音效、四麥 ENC 通話抗風噪、更長 60 小時續航，且隨盒附贈專屬原廠旅行防震硬殼收納包，是通勤出差與發燒友的最佳選擇。
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== FOOTER ==================== -->
+  <footer class="py-14 border-t border-white/10 bg-black">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex flex-col md:flex-row items-center justify-between gap-6 pb-8 border-b border-white/10">
+        <div class="flex items-center gap-3">
+          <div class="w-8 h-8 rounded-full bg-brand-gold flex items-center justify-center text-black font-bold text-sm">
+            <i data-lucide="headphones" class="w-4 h-4"></i>
+          </div>
+          <span class="text-lg font-bold text-white tracking-widest">SERENE Horizon</span>
+          <span class="text-xs text-gray-500 pl-2 border-l border-white/20">台灣官方旗艦直營</span>
+        </div>
+
+        <div class="flex items-center gap-6 text-xs text-gray-400">
+          <span>客服信箱：support@serene-audio.tw</span>
+          <span>服務時間：週一至週五 09:30 - 18:30</span>
+        </div>
+      </div>
+
+      <div class="flex flex-col sm:flex-row items-center justify-between pt-8 text-xs text-gray-500 gap-4">
+        <div>
+          © 2026 SERENE Horizon Acoustic Inc. 版權所有 · 建議最佳瀏覽器：Chrome / Safari / Edge
+        </div>
+        <div class="flex gap-6">
+          <a href="#" class="hover:text-gray-300 transition-colors">隱私權政策</a>
+          <a href="#" class="hover:text-gray-300 transition-colors">服務條款</a>
+          <a href="#" class="hover:text-gray-300 transition-colors">保固條款</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ==================== ORDER CONFIRMATION MODAL ==================== -->
+  <div id="orderSuccessModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-md hidden opacity-0 transition-opacity duration-300">
+    <div class="glass-card rounded-3xl p-8 max-w-md w-full mx-4 border border-brand-gold text-center glow-gold transform scale-95 transition-transform duration-300" id="modalCard">
+      <div class="w-16 h-16 rounded-full bg-brand-gold/20 border border-brand-gold flex items-center justify-center mx-auto mb-4 text-brand-gold">
+        <i data-lucide="check" class="w-8 h-8"></i>
+      </div>
+      <h3 class="text-2xl font-bold text-white mb-2">訂單已成功送出！</h3>
+      <p class="text-sm text-gray-300 mb-6 leading-relaxed">
+        感謝您對 SERENE Horizon 的青睞。我們已將訂單確認信與物流追蹤連結寄送至您的電子信箱，將於 24 小時內安排黑貓免運配送。
+      </p>
+
+      <div class="p-4 rounded-xl bg-black/60 border border-white/10 text-left text-xs space-y-2 mb-6">
+        <div class="flex justify-between text-gray-400">
+          <span>訂單編號：</span>
+          <span class="text-white font-mono" id="modalOrderNo">SRN-20261016-8921</span>
+        </div>
+        <div class="flex justify-between text-gray-400">
+          <span>購買規格：</span>
+          <span class="text-brand-gold font-semibold" id="modalPlan">尊榮旗艦 · 高階降噪版 (Pro ANC) × 1</span>
+        </div>
+        <div class="flex justify-between text-gray-400">
+          <span>付款方式：</span>
+          <span class="text-white">信用卡線上刷卡（第三方金流跳轉）</span>
+        </div>
+        <div class="flex justify-between text-gray-400">
+          <span>實付總額：</span>
+          <span class="text-white font-bold text-sm" id="modalTotal">NT$ 5,999 (全台免運)</span>
+        </div>
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="space-y-3">
+        <a id="modalPayButton" href="https://payment.example.com/checkout" target="_blank" rel="noopener noreferrer" class="w-full py-3.5 rounded-xl bg-gradient-to-r from-brand-goldLight via-brand-gold to-brand-goldDark text-brand-darkBg font-bold text-sm flex items-center justify-center gap-2 shadow-lg hover:scale-[1.02] transition-all">
+          <span>前往信用卡刷卡頁面完成付款</span>
+          <i data-lucide="arrow-right" class="w-4 h-4"></i>
+        </a>
+        <button onclick="closeModal()" class="w-full py-2.5 rounded-xl bg-white/5 hover:bg-white/10 text-gray-400 hover:text-white font-medium text-xs transition-all">
+          稍後付款 / 返回頁面
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== JAVASCRIPT ==================== -->
+  <script>
+    // ==============================================================
+    // 【信用卡刷卡金流跳轉連結設定】
+    // 請在此處填入您正式的第三方金流 / 信用卡刷卡網址：
+    // （修改此變數即可自動同步全站跳轉目標）
+    // ==============================================================
+    const CREDIT_CARD_PAYMENT_URL = "https://payment.example.com/checkout";
+
+    // Initialize Lucide Icons
+    lucide.createIcons();
+
+    // Order State
+    let currentTier = 'pro';
+    let unitPrice = 5999;
+    let currentQty = 1;
+
+    function updateSelection(tier, price) {
+      currentTier = tier;
+      unitPrice = price;
+      
+      const standardCard = document.getElementById('tierCard-standard');
+      const proCard = document.getElementById('tierCard-pro');
+
+      if (tier === 'standard') {
+        standardCard.classList.remove('border-white/10', 'bg-white/5');
+        standardCard.classList.add('border-brand-gold', 'bg-brand-gold/10', 'glow-gold');
+        proCard.classList.remove('border-brand-gold', 'bg-brand-gold/10', 'glow-gold');
+        proCard.classList.add('border-white/10', 'bg-white/5');
+      } else {
+        proCard.classList.remove('border-white/10', 'bg-white/5');
+        proCard.classList.add('border-brand-gold', 'bg-brand-gold/10', 'glow-gold');
+        standardCard.classList.remove('border-brand-gold', 'bg-brand-gold/10', 'glow-gold');
+        standardCard.classList.add('border-white/10', 'bg-white/5');
+      }
+
+      document.querySelector(`input[name="edition"][value="${tier}"]`).checked = true;
+      recalculate();
+    }
+
+    function selectTier(tier) {
+      if (tier === 'standard') {
+        updateSelection('standard', 3999);
+      } else {
+        updateSelection('pro', 5999);
+      }
+    }
+
+    function changeQty(delta) {
+      currentQty = Math.max(1, currentQty + delta);
+      document.getElementById('orderQty').innerText = currentQty;
+      recalculate();
+    }
+
+    function recalculate() {
+      const total = unitPrice * currentQty;
+      const formattedTotal = 'NT$ ' + total.toLocaleString();
+      document.getElementById('subtotalDisplay').innerText = formattedTotal;
+      document.getElementById('totalDisplay').innerText = formattedTotal;
+      document.getElementById('submitBtnText').innerText = `前往信用卡安全刷卡 · ${formattedTotal} (全台免運)`;
+    }
+
+    // Interactive View Switcher
+    function switchView(type, imgSrc, tagText, descText) {
+      const imgElem = document.getElementById('activeViewImg');
+      const tagElem = document.getElementById('viewTag');
+      const descElem = document.getElementById('viewDetailDesc');
+      const titleElem = document.getElementById('viewDetailTitle');
+
+      // Fade transition
+      imgElem.style.opacity = '0';
+      setTimeout(() => {
+        imgElem.src = imgSrc;
+        imgElem.style.opacity = '1';
+        tagElem.innerText = tagText;
+        descElem.innerText = descText;
+        titleElem.innerText = tagText.split(' ')[0] + ' 細節解析';
+      }, 200);
+
+      // Active state button update
+      document.querySelectorAll('.view-btn').forEach(btn => {
+        btn.classList.remove('active', 'border-brand-gold', 'bg-white/10');
+        btn.classList.add('border-white/10', 'bg-white/5');
+      });
+      event.currentTarget.classList.add('active', 'border-brand-gold', 'bg-white/10');
+      event.currentTarget.classList.remove('border-white/10', 'bg-white/5');
+    }
+
+    // Modal Handling
+    function handleOrderSubmit(e) {
+      e.preventDefault();
+      const modal = document.getElementById('orderSuccessModal');
+      const modalCard = document.getElementById('modalCard');
+      
+      const randomId = 'SRN-20261016-' + Math.floor(1000 + Math.random() * 9000);
+      document.getElementById('modalOrderNo').innerText = randomId;
+      document.getElementById('modalPlan').innerText = (currentTier === 'pro' ? '尊榮旗艦 · 高階降噪版 (Pro ANC)' : '日常純粹 · 一般版 (Standard)') + ` × ${currentQty}`;
+      document.getElementById('modalTotal').innerText = 'NT$ ' + (unitPrice * currentQty).toLocaleString() + ' (全台免運)';
+
+      // 同步設定跳轉連結
+      const modalPayBtn = document.getElementById('modalPayButton');
+      if (modalPayBtn) {
+        modalPayBtn.href = CREDIT_CARD_PAYMENT_URL;
+      }
+
+      modal.classList.remove('hidden');
+      setTimeout(() => {
+        modal.classList.remove('opacity-0');
+        modalCard.classList.remove('scale-95');
+      }, 10);
+    }
+
+    function closeModal() {
+      const modal = document.getElementById('orderSuccessModal');
+      const modalCard = document.getElementById('modalCard');
+      modal.classList.add('opacity-0');
+      modalCard.classList.add('scale-95');
+      setTimeout(() => {
+        modal.classList.add('hidden');
+      }, 300);
+    }
+  </script>
+</body>
+</html>
