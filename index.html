@@ -1163,18 +1163,35 @@
         </div>
       </div>
 
+      <!-- Test Environment Notice -->
+      <div class="p-3.5 rounded-xl bg-white/5 border border-brand-gold/30 text-left text-xs text-gray-300 space-y-1.5 mb-5">
+        <div class="text-brand-goldLight font-bold flex items-center gap-1.5 text-xs">
+          <i data-lucide="shield-check" class="w-4 h-4 text-brand-gold"></i>
+          <span>綠界科技 (ECPay) 測試環境刷卡提示</span>
+        </div>
+        <div class="text-[11px] text-gray-400 leading-relaxed">
+          • 測試信用卡號：<code class="text-brand-gold font-mono bg-black/60 px-1.5 py-0.5 rounded border border-white/10">4311-9522-2222-2222</code><br>
+          • 有效年月：填寫大於當前之未來年月（例：<code class="text-white font-mono">12/28</code>）｜ 安全碼：<code class="text-white font-mono">222</code><br>
+          • 手機 OTP 簡訊碼：固定輸入 <code class="text-brand-gold font-mono bg-black/60 px-1.5 py-0.5 rounded border border-white/10">123456</code>
+        </div>
+      </div>
+
       <!-- Action Buttons -->
       <div class="space-y-3">
-        <a id="modalPayButton" href="https://payment.example.com/checkout" target="_blank" rel="noopener noreferrer" class="w-full py-3.5 rounded-xl bg-gradient-to-r from-brand-goldLight via-brand-gold to-brand-goldDark text-brand-darkBg font-bold text-sm flex items-center justify-center gap-2 shadow-lg hover:scale-[1.02] transition-all">
-          <span>前往信用卡刷卡頁面完成付款</span>
+        <button id="modalPayButton" type="button" onclick="proceedToEcpayPayment()" class="w-full py-3.5 rounded-xl bg-gradient-to-r from-brand-goldLight via-brand-gold to-brand-goldDark text-brand-darkBg font-bold text-sm flex items-center justify-center gap-2 shadow-lg hover:scale-[1.02] transition-all cursor-pointer">
+          <i data-lucide="credit-card" class="w-4 h-4"></i>
+          <span>前往綠界信用卡刷卡（測試環境）</span>
           <i data-lucide="arrow-right" class="w-4 h-4"></i>
-        </a>
+        </button>
         <button onclick="closeModal()" class="w-full py-2.5 rounded-xl bg-white/5 hover:bg-white/10 text-gray-400 hover:text-white font-medium text-xs transition-all">
           稍後付款 / 返回頁面
         </button>
       </div>
     </div>
   </div>
+
+  <!-- Hidden Form for ECPay POST Submission -->
+  <form id="ecpaySubmitForm" method="POST" action="https://payment-stage.ecpay.com.tw/Cashier/AioCheckOut/V5" target="_blank" class="hidden"></form>
 
   <!-- ==================== JAVASCRIPT ==================== -->
   <script>
@@ -1191,6 +1208,41 @@
     // （修改此變數即可自動同步全站跳轉目標）
     // ==============================================================
     const CREDIT_CARD_PAYMENT_URL = "https://payment.example.com/checkout";
+
+    // ==============================================================
+    // 【綠界科技 ECPay 信用卡測試環境設定】
+    // ==============================================================
+    const ECPAY_CONFIG = {
+      merchantID: "3002607",
+      hashKey: "pwFHCqoQZGmho4w6",
+      hashIV: "EkRm7iFT261dpevs",
+      actionUrl: "https://payment-stage.ecpay.com.tw/Cashier/AioCheckOut/V5"
+    };
+
+    let currentEcpayParams = null;
+
+    // 綠界 CheckMacValue 雜湊演算法 (SHA256)
+    async function calculateEcpayCheckMac(params, hashKey, hashIV) {
+      const sortedKeys = Object.keys(params).sort();
+      let rawStr = 'HashKey=' + hashKey;
+      for (const k of sortedKeys) {
+        rawStr += '&' + k + '=' + params[k];
+      }
+      rawStr += '&HashIV=' + hashIV;
+      let enc = encodeURIComponent(rawStr).toLowerCase();
+      enc = enc.replace(/%2d/g, '-')
+               .replace(/%5f/g, '_')
+               .replace(/%2e/g, '.')
+               .replace(/%21/g, '!')
+               .replace(/%2a/g, '*')
+               .replace(/%28/g, '(')
+               .replace(/%29/g, ')')
+               .replace(/%20/g, '+');
+      const msgUint8 = new TextEncoder().encode(enc);
+      const hashBuffer = await crypto.subtle.digest('SHA-256', msgUint8);
+      const hashArray = Array.from(new Uint8Array(hashBuffer));
+      return hashArray.map(b => b.toString(16).padStart(2, '0')).join('').toUpperCase();
+    }
 
     // Initialize Lucide Icons
     lucide.createIcons();
@@ -1284,10 +1336,15 @@
       submitBtn.classList.add('opacity-75');
       submitBtnText.innerText = "資料加密同步中，請稍候...";
 
-      const randomId = 'SRN-20261023-' + Math.floor(1000 + Math.random() * 9000);
+      // 產生相容綠界 MerchantTradeNo 的唯一訂單編號 (英數字長度 16 字元，不超過 20 字元上限)
+      const randomId = 'SRN' + Date.now().toString().slice(-9) + Math.floor(1000 + Math.random() * 9000);
       const planName = (currentTier === 'pro' ? '尊榮旗艦 · 高階降噪版 (Pro ANC)' : '日常純粹 · 一般版 (Standard)');
       const total = unitPrice * currentQty;
-      const nowTime = new Date().toLocaleString('zh-TW', { timeZone: 'Asia/Taipei', hour12: false });
+
+      const now = new Date();
+      const pad = n => n.toString().padStart(2, '0');
+      const ecpayTradeDate = now.getFullYear() + '/' + pad(now.getMonth() + 1) + '/' + pad(now.getDate()) + ' ' + pad(now.getHours()) + ':' + pad(now.getMinutes()) + ':' + pad(now.getSeconds());
+      const nowTime = now.toLocaleString('zh-TW', { timeZone: 'Asia/Taipei', hour12: false });
 
       const customerName = document.getElementById('customerName').value.trim();
       const customerPhone = document.getElementById('customerPhone').value.trim();
@@ -1312,6 +1369,29 @@
         notes: notes
       };
 
+      // 產生綠界 Stage 測試環境參數與 CheckMacValue
+      const cleanItemTitle = (currentTier === 'pro' ? 'SERENE_Horizon_高階降噪版' : 'SERENE_Horizon_日常純粹版') + ' x ' + currentQty;
+      const ecpayParams = {
+        MerchantID: ECPAY_CONFIG.merchantID,
+        MerchantTradeNo: randomId,
+        MerchantTradeDate: ecpayTradeDate,
+        PaymentType: 'aio',
+        TotalAmount: total.toString(),
+        TradeDesc: 'SERENE_Horizon_Preorder',
+        ItemName: cleanItemTitle,
+        ReturnURL: GAS_ENDPOINT_URL,
+        ChoosePayment: 'Credit',
+        EncryptType: '1',
+        ClientBackURL: window.location.href.split('#')[0]
+      };
+
+      try {
+        ecpayParams.CheckMacValue = await calculateEcpayCheckMac(ecpayParams, ECPAY_CONFIG.hashKey, ECPAY_CONFIG.hashIV);
+        currentEcpayParams = ecpayParams;
+      } catch (macErr) {
+        console.error('CheckMacValue 計算異常:', macErr);
+      }
+
       // 串接 Google 試算表 GAS 後端 (若使用者已部署並填寫 GAS_ENDPOINT_URL)
       if (GAS_ENDPOINT_URL && !GAS_ENDPOINT_URL.includes("YOUR_GAS_WEB_APP_URL_HERE")) {
         try {
@@ -1335,12 +1415,6 @@
       document.getElementById('modalTotal').innerText = `NT$ ${total.toLocaleString()} (全台免運)`;
       document.getElementById('modalEmailNotice').innerText = `預購確認信已同步寄送至：${customerEmail}`;
 
-      // 同步設定跳轉連結
-      const modalPayBtn = document.getElementById('modalPayButton');
-      if (modalPayBtn) {
-        modalPayBtn.href = CREDIT_CARD_PAYMENT_URL;
-      }
-
       // 顯示確認彈窗
       const modal = document.getElementById('orderSuccessModal');
       const modalCard = document.getElementById('modalCard');
@@ -1354,6 +1428,24 @@
       submitBtn.disabled = false;
       submitBtn.classList.remove('opacity-75');
       submitBtnText.innerText = originalBtnText;
+    }
+
+    // 前往綠界信用卡刷卡測試頁
+    function proceedToEcpayPayment() {
+      if (!currentEcpayParams) {
+        alert('綠界付款參數初始化中，請稍候重試。');
+        return;
+      }
+      const form = document.getElementById('ecpaySubmitForm');
+      form.innerHTML = '';
+      for (const [key, val] of Object.entries(currentEcpayParams)) {
+        const input = document.createElement('input');
+        input.type = 'hidden';
+        input.name = key;
+        input.value = val;
+        form.appendChild(input);
+      }
+      form.submit();
     }
 
     function closeModal() {

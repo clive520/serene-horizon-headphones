@@ -56,9 +56,19 @@ function doPost(e) {
   lock.tryLock(10000);
 
   try {
+    // 1. 判斷是否為綠界科技付款結果回傳 (ReturnURL)
+    if (e && e.parameter && e.parameter.RtnCode) {
+      return handleEcpayCallback(e.parameter);
+    }
+
+    // 2. 否則為前端顧客預購表單送出
     let data;
     if (e.postData && e.postData.contents) {
-      data = JSON.parse(e.postData.contents);
+      try {
+        data = JSON.parse(e.postData.contents);
+      } catch (jsonErr) {
+        data = e.parameter;
+      }
     } else if (e.parameter) {
       data = e.parameter;
     } else {
@@ -380,4 +390,122 @@ function testLinePush() {
     notes: "這是一則測試通知"
   };
   sendLineNotification(testData);
+}
+
+/**
+ * ==============================================================
+ * 綠界科技 (ECPay) 金流伺服器回傳處理模組 (ReturnURL)
+ * ==============================================================
+ */
+
+/**
+ * 處理綠界金流伺服器背景回傳 (ReturnURL)
+ * @param {Object} params 綠界 POST 回傳的表單參數
+ */
+function handleEcpayCallback(params) {
+  const sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
+  const tradeNo = String(params.MerchantTradeNo || "").trim();
+  const rtnCode = String(params.RtnCode || "").trim(); // '1' 代表刷卡交易成功
+  const rtnMsg = params.RtnMsg || "交易完成";
+  const tradeAmt = params.TradeAmt || "0";
+  const paymentDate = params.PaymentDate || Utilities.formatDate(new Date(), "Asia/Taipei", "yyyy-MM-dd HH:mm:ss");
+  const paymentType = params.PaymentType || "Credit_CreditCard";
+
+  Logger.log("收到綠界付款回傳通知: TradeNo=" + tradeNo + ", RtnCode=" + rtnCode + ", RtnMsg=" + rtnMsg);
+
+  if (rtnCode === "1") {
+    // 遍歷試算表尋找該筆訂單編號 (位於 A 欄，第 1 欄)
+    const dataRange = sheet.getDataRange().getValues();
+    let updated = false;
+
+    for (let i = 1; i < dataRange.length; i++) {
+      if (String(dataRange[i][0]).trim() === tradeNo) {
+        const rowNumber = i + 1;
+        // 欄位 N (第 14 欄) 為「付款狀態」
+        sheet.getRange(rowNumber, 14).setValue("已付款 (綠界授權成功)");
+        // 欄位 O (第 15 欄) 為「出貨狀態」
+        sheet.getRange(rowNumber, 15).setValue("備貨中");
+        updated = true;
+        Logger.log("試算表第 " + rowNumber + " 列訂單狀態已更新為【已付款】");
+        break;
+      }
+    }
+
+    // 發送 LINE 刷卡成功即時推播
+    sendLinePaymentSuccessNotification({
+      orderId: tradeNo,
+      amount: tradeAmt,
+      paymentDate: paymentDate,
+      paymentType: paymentType,
+      rtnMsg: rtnMsg
+    });
+  } else {
+    Logger.log("綠界交易非成功代碼: " + rtnCode + " / " + rtnMsg);
+  }
+
+  // 綠界規範：伺服器端必須回傳純文字 1|OK，否則綠界會視為失敗並持續重試發送
+  return ContentService.createTextOutput("1|OK");
+}
+
+/**
+ * 發送綠界刷卡付款成功 LINE 通知
+ * @param {Object} payData 付款資訊
+ */
+function sendLinePaymentSuccessNotification(payData) {
+  if (!LINE_CHANNEL_ACCESS_TOKEN || !LINE_USER_ID) return;
+
+  const url = "https://api.line.me/v2/bot/message/push";
+  const messageText = 
+`💳【SERENE Horizon 綠界刷卡成功！】
+
+🎉 賀！顧客已順利完成信用卡付款！
+
+📋 訂單編號：${payData.orderId}
+💰 刷卡金額：NT$ ${Number(payData.amount || 0).toLocaleString()}
+🕒 付款時間：${payData.paymentDate}
+💳 支付方式：綠界信用卡線上刷卡（測試環境）
+✅ 交易訊息：${payData.rtnMsg}
+
+📊 Google 試算表狀態已自動更新：
+【付款狀態】➔ 已付款 (綠界授權成功)
+【出貨狀態】➔ 備貨中`;
+
+  const payload = {
+    to: LINE_USER_ID,
+    messages: [
+      {
+        type: "text",
+        text: messageText
+      }
+    ]
+  };
+
+  try {
+    const res = UrlFetchApp.fetch(url, {
+      method: "post",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer " + LINE_CHANNEL_ACCESS_TOKEN
+      },
+      payload: JSON.stringify(payload),
+      muteHttpExceptions: true
+    });
+    Logger.log("LINE 付款成功推播回應碼：" + res.getResponseCode());
+  } catch (err) {
+    Logger.log("LINE 付款推播失敗：" + err.toString());
+  }
+}
+
+/**
+ * 測試綠界刷卡成功推播
+ * （可在 Google Apps Script 介面上方下拉選單選取「testEcpayPaymentSuccess」並點擊「執行」進行測試）
+ */
+function testEcpayPaymentSuccess() {
+  sendLinePaymentSuccessNotification({
+    orderId: "SRN" + Date.now().toString().slice(-9) + "9999",
+    amount: "5999",
+    paymentDate: Utilities.formatDate(new Date(), "Asia/Taipei", "yyyy-MM-dd HH:mm:ss"),
+    paymentType: "Credit_CreditCard",
+    rtnMsg: "Succeeded"
+  });
 }
